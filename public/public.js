@@ -95,7 +95,7 @@ function renderMembers() {
 function renderEvents() {
   const records = recordMap();
   const monthEvents = [...state.events].filter((event) => event.date.slice(0, 7) === selectedMonth).sort((a, b) => `${b.date}${b.id}`.localeCompare(`${a.date}${a.id}`));
-  const visibleEvents = selectedMember === "all" ? monthEvents : monthEvents.filter((event) => records.has(`${event.id}:${selectedMember}`));
+  const visibleEvents = monthEvents;
   const rows = visibleEvents.map((event) => {
     const scopedRecords = state.records.filter((record) => record.eventId === event.id && (selectedMember === "all" || record.memberId === selectedMember));
     const attended = scopedRecords.filter((record) => ["present", "late"].includes(record.status)).length;
