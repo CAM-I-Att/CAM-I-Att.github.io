@@ -44,7 +44,11 @@ function randomMemberId(role = "일반 회원") {
 
 function memberLabel(member) {
   const role = member?.note || "일반 회원";
-  return member?.department ? `${role} · ${member.department}` : role;
+  return [role, member?.department, member?.cohort ? `${member.cohort}기` : ""].filter(Boolean).join(" · ");
+}
+
+function normalizeCohort(value) {
+  return String(value || "").trim().replace(/\s*기$/, "");
 }
 
 function updateMemberDepartmentField() {
@@ -197,14 +201,11 @@ function render() {
   $$(".nav-item").forEach((item) => item.classList.toggle("active", item.dataset.view === currentView));
   const titles = {
     dashboard: ["대시보드", "출결 현황과 규정 충족 여부를 한눈에 확인하세요."],
-    records: ["출결 기록", "행사를 선택하고 회원별 출결 상태를 저장하세요."],
-    members: ["회원 관리", "회원 목록과 비고·부서를 관리하세요."],
-    events: ["행사 관리", "공식 행사와 사진 번개 일정을 등록하세요."],
     rules: ["출결 규정", "첨부된 회칙 기준을 프로그램 계산에 그대로 반영합니다."],
   };
   $("#page-title").textContent = titles[currentView][0];
   $("#page-subtitle").textContent = titles[currentView][1];
-  const views = { dashboard: renderDashboard, records: renderRecords, members: renderMembers, events: renderEvents, rules: renderRules };
+  const views = { dashboard: renderDashboard, rules: renderRules };
   $("#app-view").innerHTML = views[currentView]();
   if (currentView === "members") updateMemberDepartmentField();
   if (currentView === "records") {
@@ -249,7 +250,7 @@ function renderDashboard() {
         <div class="rules-mini"><div class="rule-line"><span>공식 출사 / 행사</span><strong>출석 1회</strong></div><div class="rule-line"><span>사진 번개</span><strong>출석 0.5회</strong></div><div class="rule-line"><span>오후 2시 이후 참석</span><strong>벌금 2,000원</strong></div><div class="rule-line"><span>무단 결석</span><strong>벌금 5,000원</strong></div></div>
       </section>
     </div>
-    <section class="panel"><div class="panel-header"><div><h2 class="panel-title">최근 출결 기록</h2><p class="panel-desc">가장 최근 행사부터 표시합니다.</p></div><button class="button button-ghost button-small" data-view-jump="records">전체 기록 보기</button></div><div class="table-wrap"><table class="data-table"><thead><tr><th>행사일</th><th>행사</th><th>회원</th><th>상태</th><th>벌금</th></tr></thead><tbody>${recent.length ? recent.map((record) => { const event = getEvent(record.eventId); const member = getMember(record.memberId); return `<tr><td>${formatDate(event?.date)}</td><td class="primary-cell">${escapeHtml(event?.name)}</td><td>${escapeHtml(member?.name)}</td><td>${recordBadge(record.status)}</td><td class="number-cell">${money(fine(record.status))}</td></tr>`; }).join("") : `<tr><td colspan="5" class="empty">아직 출결 기록이 없습니다.</td></tr>`}</tbody></table></div></section>
+    <section class="panel"><div class="panel-header"><div><h2 class="panel-title">최근 출결 기록</h2><p class="panel-desc">가장 최근 행사부터 표시합니다.</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th>행사일</th><th>행사</th><th>회원</th><th>상태</th><th>벌금</th></tr></thead><tbody>${recent.length ? recent.map((record) => { const event = getEvent(record.eventId); const member = getMember(record.memberId); return `<tr><td>${formatDate(event?.date)}</td><td class="primary-cell">${escapeHtml(event?.name)}</td><td>${escapeHtml(member?.name)}</td><td>${recordBadge(record.status)}</td><td class="number-cell">${money(fine(record.status))}</td></tr>`; }).join("") : `<tr><td colspan="5" class="empty">아직 출결 기록이 없습니다.</td></tr>`}</tbody></table></div></section>
   </div>`;
 }
 
@@ -271,7 +272,7 @@ function renderRecords() {
 }
 
 function renderMembers() {
-  return `<div class="split-layout"><section class="panel"><div class="panel-header"><div><h2 class="panel-title">회원 등록</h2><p class="panel-desc">회원 ID는 저장할 때 자동 생성됩니다. 운영진을 선택하면 부서를 추가로 선택합니다. 정보 부서는 최대 2명입니다.</p></div></div><form id="member-form"><div class="field-grid"><div class="field full"><label class="label" for="member-name">이름</label><input class="input" id="member-name" name="name" placeholder="예: 홍길동" required></div><div class="field full"><label class="label" for="member-note">비고</label><select class="select" id="member-note" name="note"><option value="일반 회원" selected>일반 회원</option><option value="운영진">운영진</option></select></div><div class="field full" id="member-department-wrap" hidden><label class="label" for="member-department">운영진 부서</label><select class="select" id="member-department" name="department"><option value="">부서 선택</option>${MEMBER_DEPARTMENTS.map((department) => `<option value="${department}">${department}</option>`).join("")}</select></div></div><div class="form-actions"><button class="button button-primary">회원 추가</button></div></form></section><section class="panel"><div class="panel-header"><div><h2 class="panel-title">회원 목록 <span class="subtle">${state.members.length}명</span></h2><p class="panel-desc">회원 ID는 중복되지 않는 난수로 표시됩니다.</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th>회원</th><th>회원 ID</th><th>비고</th><th>부서</th><th>누적 벌금</th><th></th></tr></thead><tbody>${state.members.length ? state.members.map((member) => { const totalFine = state.records.filter((record) => record.memberId === member.id).reduce((sum, record) => sum + fine(record.status), 0); return `<tr><td class="primary-cell"><span class="avatar">${escapeHtml(initials(member.name))}</span>${escapeHtml(member.name)}</td><td><code>${escapeHtml(member.id)}</code></td><td><span class="badge ${member.note === "운영진" ? "blue" : "neutral"}">${escapeHtml(member.note || "일반 회원")}</span></td><td>${escapeHtml(member.department || "-")}</td><td class="number-cell">${money(totalFine)}</td><td><button class="button button-danger button-small" data-action="delete-member" data-id="${member.id}">삭제</button></td></tr>`; }).join("") : `<tr><td colspan="6" class="empty">등록된 회원이 없습니다.</td></tr>`}</tbody></table></div></section></div>`;
+  return `<div class="split-layout"><section class="panel"><div class="panel-header"><div><h2 class="panel-title">회원 등록</h2><p class="panel-desc">회원 ID는 저장할 때 자동 생성됩니다. 모든 회원의 기수를 입력하고, 운영진은 부서를 추가로 선택합니다. 정보 부서는 최대 2명입니다.</p></div></div><form id="member-form"><div class="field-grid"><div class="field full"><label class="label" for="member-name">이름</label><input class="input" id="member-name" name="name" placeholder="예: 홍길동" required></div><div class="field full"><label class="label" for="member-cohort">기수</label><input class="input" id="member-cohort" name="cohort" placeholder="예: 3" inputmode="numeric"></div><div class="field full"><label class="label" for="member-note">비고</label><select class="select" id="member-note" name="note"><option value="일반 회원" selected>일반 회원</option><option value="운영진">운영진</option></select></div><div class="field full" id="member-department-wrap" hidden><label class="label" for="member-department">운영진 부서</label><select class="select" id="member-department" name="department"><option value="">부서 선택</option>${MEMBER_DEPARTMENTS.map((department) => `<option value="${department}">${department}</option>`).join("")}</select></div></div><div class="form-actions"><button class="button button-primary">회원 추가</button></div></form></section><section class="panel"><div class="panel-header"><div><h2 class="panel-title">회원 목록 <span class="subtle">${state.members.length}명</span></h2><p class="panel-desc">회원 ID는 중복되지 않는 난수로 표시됩니다.</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th>회원</th><th>회원 ID</th><th>기수</th><th>비고</th><th>부서</th><th>누적 벌금</th><th></th></tr></thead><tbody>${state.members.length ? state.members.map((member) => { const totalFine = state.records.filter((record) => record.memberId === member.id).reduce((sum, record) => sum + fine(record.status), 0); return `<tr><td class="primary-cell"><span class="avatar">${escapeHtml(initials(member.name))}</span>${escapeHtml(member.name)}</td><td><code>${escapeHtml(member.id)}</code></td><td>${escapeHtml(member.cohort ? `${member.cohort}기` : "-")}</td><td><span class="badge ${member.note === "운영진" ? "blue" : "neutral"}">${escapeHtml(member.note || "일반 회원")}</span></td><td>${escapeHtml(member.department || "-")}</td><td class="number-cell">${money(totalFine)}</td><td><button class="button button-danger button-small" data-action="delete-member" data-id="${member.id}">삭제</button></td></tr>`; }).join("") : `<tr><td colspan="7" class="empty">등록된 회원이 없습니다.</td></tr>`}</tbody></table></div></section></div>`;
 }
 
 function renderEvents() {
@@ -309,6 +310,7 @@ function handleMemberSubmit(form) {
   const name = String(data.get("name") || "").trim();
   const note = String(data.get("note") || "일반 회원").trim();
   const department = String(data.get("department") || "").trim();
+  const cohort = normalizeCohort(data.get("cohort"));
   if (note === "운영진" && !MEMBER_DEPARTMENTS.includes(department)) {
     showNotice("운영진 부서를 선택하세요.", true);
     return;
@@ -318,7 +320,7 @@ function handleMemberSubmit(form) {
     return;
   }
   const id = randomMemberId(note);
-  state.members.push({ id, name, note: note === "운영진" ? "운영진" : "일반 회원", department: note === "운영진" ? department : "", active: true });
+  state.members.push({ id, name, note: note === "운영진" ? "운영진" : "일반 회원", department: note === "운영진" ? department : "", cohort, active: true });
   saveState(`${name} 회원을 추가했습니다. 자동 ID: ${id}`).catch((error) => showNotice(error.message, true));
 }
 
@@ -351,12 +353,9 @@ async function deleteEvent(id) {
 document.addEventListener("click", (event) => {
   const nav = event.target.closest("[data-view]");
   if (nav) { currentView = nav.dataset.view; render(); return; }
-  const jump = event.target.closest("[data-view-jump]");
-  if (jump) { currentView = jump.dataset.viewJump; render(); return; }
   const action = event.target.closest("[data-action]");
   if (!action) return;
   if (action.dataset.action === "refresh") loadState().catch((error) => showNotice(error.message, true));
-  if (action.dataset.action === "open-records") { currentView = "records"; render(); }
   if (action.dataset.action === "save-attendance") saveAttendance();
   if (action.dataset.action === "delete-member") deleteMember(action.dataset.id);
   if (action.dataset.action === "delete-event") deleteEvent(action.dataset.id);
