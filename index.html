@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>출결 관리</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">A</span>
+        <div>
+          <strong>출결 관리</strong>
+          <span>Attendance desk</span>
+        </div>
+      </div>
+      <nav class="nav-list" aria-label="주 메뉴">
+        <button class="nav-item active" data-view="dashboard"><span class="nav-icon">01</span><span>대시보드</span></button>
+        <button class="nav-item" data-view="records"><span class="nav-icon">02</span><span>출결 기록</span></button>
+        <button class="nav-item" data-view="members"><span class="nav-icon">03</span><span>회원 관리</span></button>
+        <button class="nav-item" data-view="events"><span class="nav-icon">04</span><span>행사 관리</span></button>
+        <button class="nav-item" data-view="rules"><span class="nav-icon">05</span><span>출결 규정</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sync-card">
+          <div class="sync-card-head"><span class="sync-dot"></span><strong>엑셀 자동 연동</strong></div>
+          <p>저장할 때마다 엑셀·CSV 파일을 갱신합니다.</p>
+          <code>data/attendance.xlsx</code>
+          <span id="sync-time">확인 중</span>
+        </div>
+        <div class="sidebar-foot">로컬에서 안전하게 실행됩니다.</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">MEMBER OPERATIONS</p>
+          <h1 id="page-title">대시보드</h1>
+          <p id="page-subtitle">출결 현황과 규정 충족 여부를 한눈에 확인하세요.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="button button-ghost" data-action="refresh">새로고침</button>
+          <button class="button button-primary" data-action="open-records">+ 출결 기록</button>
+        </div>
+      </header>
+
+      <div id="notice" class="notice" role="status" hidden></div>
+      <section id="app-view" aria-live="polite"></section>
+    </main>
+  </div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

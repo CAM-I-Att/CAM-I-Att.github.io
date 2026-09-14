@@ -1,0 +1,6 @@
+data/state.json
+data/attendance.csv
+data/attendance_summary.csv
+data/attendance.xlsx
+__pycache__/
+.DS_Store

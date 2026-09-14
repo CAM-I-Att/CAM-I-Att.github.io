@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="출결 현황 공개 확인 페이지">
+  <title>출결 현황</title>
+  <link rel="stylesheet" href="./public.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">PUBLIC ATTENDANCE BOARD</p>
+        <h1>출결 현황</h1>
+        <p class="hero-copy">회원과 행사별 출결 현황을 확인할 수 있는 공개 페이지입니다.</p>
+      </div>
+      <div class="read-only-badge"><span></span> 공개 확인 전용</div>
+    </header>
+
+    <section class="notice" aria-label="공개 페이지 안내">
+      <strong>읽기 전용 페이지입니다.</strong>
+      <span>회원 등록, 출결 수정, 삭제 기능은 제공하지 않습니다.</span>
+      <small id="updated-at">데이터를 불러오는 중입니다.</small>
+    </section>
+
+    <section class="toolbar" aria-label="조회 조건">
+      <label>
+        <span>기준월</span>
+        <select id="month-select" aria-label="기준월"></select>
+      </label>
+      <label>
+        <span>회원 필터</span>
+        <select id="member-select" aria-label="회원 필터"><option value="all">전체 회원</option></select>
+      </label>
+    </section>
+
+    <section id="summary-cards" class="summary-grid" aria-label="요약"></section>
+    <section id="member-section" class="panel"></section>
+    <section id="event-section" class="panel"></section>
+
+    <footer class="footer">
+      <span>공개용 데이터는 관리자 페이지에서 갱신 후 GitHub에 반영됩니다.</span>
+      <span>출결 규정: 월 참여율·전체 참여율 모두 50% 이상</span>
+    </footer>
+  </main>
+  <script src="./public.js" defer></script>
+</body>
+</html>
