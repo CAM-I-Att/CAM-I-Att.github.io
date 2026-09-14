@@ -1,7 +1,112 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-14T13:58:03",
-  "members": [],
-  "events": [],
-  "records": []
+  "generatedAt": "2026-09-14T15:10:52",
+  "members": [
+    {
+      "id": "O-B25ADA4D",
+      "name": "강남주",
+      "note": "운영진",
+      "department": "총괄",
+      "cohort": "20"
+    },
+    {
+      "id": "O-3F5A6D0D",
+      "name": "이준우",
+      "note": "운영진",
+      "department": "출결",
+      "cohort": "21"
+    },
+    {
+      "id": "O-2BD7ADA2",
+      "name": "변지은",
+      "note": "운영진",
+      "department": "정보",
+      "cohort": "20"
+    },
+    {
+      "id": "O-F64EDBB4",
+      "name": "한시우",
+      "note": "운영진",
+      "department": "정보",
+      "cohort": "21"
+    },
+    {
+      "id": "O-952EB328",
+      "name": "김태건",
+      "note": "운영진",
+      "department": "홍보",
+      "cohort": "21"
+    },
+    {
+      "id": "O-1F3823D7",
+      "name": "양승찬",
+      "note": "운영진",
+      "department": "총무",
+      "cohort": "20"
+    }
+  ],
+  "events": [
+    {
+      "id": "E-mu0ud0gb-juejp",
+      "date": "2026-09-12",
+      "name": "9/12 서촌 정기 출사",
+      "type": "official",
+      "startTime": "14:00",
+      "location": "서촌(경복궁역 2번출구)"
+    },
+    {
+      "id": "E-mu0ueafb-846uj",
+      "date": "2026-09-11",
+      "name": "반포한강공원 야간출사 번개",
+      "type": "photo",
+      "startTime": "18:00",
+      "location": "반포한강공원"
+    },
+    {
+      "id": "E-mu0uf6d9-xe6yx",
+      "date": "2026-09-19",
+      "name": "9/19 구로 푸른수목원 정기출사",
+      "type": "official",
+      "startTime": "14:00",
+      "location": "구로 푸른수목원"
+    }
+  ],
+  "records": [
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "O-B25ADA4D",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "O-952EB328",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "O-2BD7ADA2",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "O-1F3823D7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "O-3F5A6D0D",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "O-F64EDBB4",
+      "status": "present",
+      "attendanceTime": ""
+    }
+  ]
 }
