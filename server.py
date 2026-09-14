@@ -75,11 +75,11 @@ def seed_state() -> dict[str, Any]:
         return date(year, month, min(day, 28)).isoformat()
 
     members = [
-        {"id": "M001", "name": "김민지", "note": "일반 회원", "department": "", "active": True},
-        {"id": "M002", "name": "박서준", "note": "일반 회원", "department": "", "active": True},
-        {"id": "M003", "name": "이하은", "note": "일반 회원", "department": "", "active": True},
-        {"id": "M004", "name": "정도윤", "note": "일반 회원", "department": "", "active": True},
-        {"id": "M005", "name": "최유진", "note": "일반 회원", "department": "", "active": True},
+        {"id": "M001", "name": "김민지", "note": "일반 회원", "department": "", "cohort": "", "active": True},
+        {"id": "M002", "name": "박서준", "note": "일반 회원", "department": "", "cohort": "", "active": True},
+        {"id": "M003", "name": "이하은", "note": "일반 회원", "department": "", "cohort": "", "active": True},
+        {"id": "M004", "name": "정도윤", "note": "일반 회원", "department": "", "cohort": "", "active": True},
+        {"id": "M005", "name": "최유진", "note": "일반 회원", "department": "", "cohort": "", "active": True},
     ]
     events = [
         {"id": "E001", "date": d(-2, 16), "name": "여름 정기 출사", "type": "official", "startTime": "14:00", "location": "서울숲", "note": ""},
@@ -128,6 +128,9 @@ def clean_state(raw: dict[str, Any]) -> dict[str, Any]:
             note = str(item.get("note", "")).strip()
             normalized_note = note if note in MEMBER_ROLES else "일반 회원"
             department = str(item.get("department", "")).strip()
+            cohort = str(item.get("cohort", "")).strip()
+            if cohort.endswith("기"):
+                cohort = cohort[:-1].strip()
             if normalized_note != "운영진" or department not in MEMBER_DEPARTMENTS:
                 department = ""
             members.append({
@@ -135,6 +138,7 @@ def clean_state(raw: dict[str, Any]) -> dict[str, Any]:
                 "name": name,
                 "note": normalized_note,
                 "department": department,
+                "cohort": cohort,
                 "active": bool(item.get("active", True)),
             })
     events = []
@@ -237,6 +241,7 @@ def detail_rows(state: dict[str, Any]) -> list[list[Any]]:
                 member["name"],
                 member.get("note", ""),
                 member.get("department", ""),
+                member.get("cohort", ""),
                 status_label(status),
                 record.get("attendanceTime", "") if record else "",
                 monthly_units if record else "",
@@ -305,6 +310,7 @@ def summary_rows(state: dict[str, Any]) -> list[list[Any]]:
                 member["name"],
                 member.get("note", ""),
                 member.get("department", ""),
+                member.get("cohort", ""),
                 stats["eventCount"],
                 stats["participationUnits"],
                 f"{stats['monthlyRate']:.1%}",
@@ -330,6 +336,7 @@ def public_snapshot(state: dict[str, Any]) -> dict[str, Any]:
                 "name": member["name"],
                 "note": member.get("note", ""),
                 "department": member.get("department", ""),
+                "cohort": member.get("cohort", ""),
             }
             for member in state["members"]
         ],
@@ -437,8 +444,8 @@ def write_xlsx_file(path: Path, detail_headers: list[str], detail: list[list[Any
 
 def write_exports(state: dict[str, Any]) -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    detail_headers = ["기록ID", "행사일", "행사명", "행사유형", "회원ID", "회원명", "비고", "부서", "출결상태", "출석 시간", "이달의 누적 출석", "전체 누적 출석", "벌금(원)", "출결 메모", "기록시각"]
-    summary_headers = ["월", "회원ID", "회원명", "비고", "부서", "월 행사수", "이달의 누적 출석", "월 참여율", "전체 행사수", "전체 누적 출석", "전체 참여율", "기준", "미입력 행사수", "미달 월수", "누적 경고", "월 벌금(원)"]
+    detail_headers = ["기록ID", "행사일", "행사명", "행사유형", "회원ID", "회원명", "비고", "부서", "기수", "출결상태", "출석 시간", "이달의 누적 출석", "전체 누적 출석", "벌금(원)", "출결 메모", "기록시각"]
+    summary_headers = ["월", "회원ID", "회원명", "비고", "부서", "기수", "월 행사수", "이달의 누적 출석", "월 참여율", "전체 행사수", "전체 누적 출석", "전체 참여율", "기준", "미입력 행사수", "미달 월수", "누적 경고", "월 벌금(원)"]
     detail = detail_rows(state)
     summary = summary_rows(state)
     write_csv_file(
