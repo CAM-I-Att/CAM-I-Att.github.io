@@ -24,6 +24,10 @@ let currentView = "dashboard";
 let selectedMonth = new Date().toISOString().slice(0, 7);
 let selectedEventId = "";
 let noticeTimer = null;
+let readOnlyMode = false;
+
+const PUBLIC_STATE_URL = "./public/data/public-state.json";
+const LOCAL_HOSTS = new Set(["127.0.0.1", "localhost"]);
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
@@ -70,9 +74,27 @@ async function api(url, options = {}) {
 }
 
 async function loadState() {
-  const data = await api("/api/state");
-  state = data.state;
-  sync = data.sync;
+  const usePublicSnapshot = !LOCAL_HOSTS.has(window.location.hostname);
+  if (usePublicSnapshot) {
+    const response = await fetch(PUBLIC_STATE_URL, { cache: "no-store" });
+    if (!response.ok) throw new Error("공개 데이터를 불러오지 못했습니다.");
+    state = await response.json();
+    sync = { status: "공개 확인 전용", updatedAt: state.generatedAt };
+    readOnlyMode = true;
+  } else {
+    try {
+      const data = await api("/api/state");
+      state = data.state;
+      sync = data.sync;
+      readOnlyMode = false;
+    } catch (error) {
+      const response = await fetch(PUBLIC_STATE_URL, { cache: "no-store" });
+      if (!response.ok) throw error;
+      state = await response.json();
+      sync = { status: "공개 확인 전용", updatedAt: state.generatedAt };
+      readOnlyMode = true;
+    }
+  }
   if (!selectedEventId || !state.events.some((event) => event.id === selectedEventId)) {
     selectedEventId = [...state.events].sort(sortEvents)[0]?.id || "";
   }
@@ -81,6 +103,7 @@ async function loadState() {
 }
 
 async function saveState(message = "저장했습니다.") {
+  if (readOnlyMode) throw new Error("공개 페이지에서는 수정할 수 없습니다.");
   const data = await api("/api/state", { method: "POST", body: JSON.stringify(state) });
   state = data.state;
   sync = data.sync;
@@ -101,6 +124,17 @@ function showNotice(message, error = false) {
 function updateSync() {
   const el = $("#sync-time");
   if (!el || !sync) return;
+  const card = $(".sync-card");
+  if (readOnlyMode) {
+    $(".sync-card-head strong", card).textContent = "공개 확인 전용";
+    $(".sync-card p", card).textContent = "관리자에서 갱신한 공개 데이터를 표시합니다.";
+    $(".sync-card code", card).textContent = "public/data/public-state.json";
+    el.textContent = sync.updatedAt ? `공개 데이터 ${sync.updatedAt.replace("T", " ")}` : "공개 데이터 준비 전";
+    return;
+  }
+  $(".sync-card-head strong", card).textContent = "엑셀 자동 연동";
+  $(".sync-card p", card).textContent = "저장할 때마다 엑셀·CSV 파일을 갱신합니다.";
+  $(".sync-card code", card).textContent = "data/attendance.xlsx";
   el.textContent = sync.updatedAt ? `최근 저장 ${sync.updatedAt.replace("T", " ")}` : "아직 저장 전";
 }
 
