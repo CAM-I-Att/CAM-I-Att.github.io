@@ -25,6 +25,7 @@ let selectedMonth = new Date().toISOString().slice(0, 7);
 let selectedEventId = "";
 let noticeTimer = null;
 let readOnlyMode = false;
+let memberSearch = "";
 
 const PUBLIC_STATE_URL = "./public/data/public-state.json";
 const LOCAL_HOSTS = new Set(["127.0.0.1", "localhost"]);
@@ -146,6 +147,7 @@ function getEvent(id) { return state.events.find((event) => event.id === id); }
 function getMember(id) { return state.members.find((member) => member.id === id); }
 function getRecord(eventId, memberId) { return state.records.find((record) => record.eventId === eventId && record.memberId === memberId); }
 function eventUnits(event, status) { return ["present", "late"].includes(status) ? Number(EVENT_TYPES[event?.type || "official"].units) : 0; }
+function isRegularEvent(event) { return event?.type === "official"; }
 function fine(status) { return Number(FINES[status] || 0); }
 
 function cumulativeAttendance(memberId, throughDate, month, overrideEventId = "", overrideStatus = undefined) {
@@ -171,8 +173,10 @@ function allMonths() {
 
 function memberStats(memberId, month = selectedMonth) {
   const events = state.events.filter((event) => event.date.slice(0, 7) === month);
+  const regularEvents = events.filter(isRegularEvent);
   const records = new Map(state.records.filter((record) => record.memberId === memberId).map((record) => [record.eventId, record]));
   let units = 0;
+  let regularUnits = 0;
   let fineWon = 0;
   let missing = 0;
   events.forEach((event) => {
@@ -180,6 +184,7 @@ function memberStats(memberId, month = selectedMonth) {
     if (!record) missing += 1;
     if (record) {
       units += eventUnits(event, record.status);
+      if (isRegularEvent(event)) regularUnits += eventUnits(event, record.status);
       fineWon += fine(record.status);
     }
   });
@@ -193,15 +198,15 @@ function memberStats(memberId, month = selectedMonth) {
       allFine += fine(record.status);
     }
   });
-  const monthlyRate = events.length ? units / events.length : 0;
+  const monthlyRate = regularEvents.length ? regularUnits / regularEvents.length : 0;
   const allRate = allEvents.length ? allUnits / allEvents.length : 0;
-  const monthlyPass = events.length > 0 && monthlyRate >= 0.5 && allRate >= 0.5;
+  const monthlyPass = regularEvents.length > 0 && monthlyRate >= 0.5 && allRate >= 0.5;
   const activeMonths = allMonths().filter((item) => item <= month && state.events.some((event) => event.date.slice(0, 7) === item)).sort();
   const underMonths = activeMonths.filter((item) => {
     const stats = memberStatsWithoutMonth(memberId, item);
     return !stats.monthlyPass;
   }).length;
-  return { events: events.length, units, monthlyRate, allEvents: allEvents.length, allUnits, allRate, monthlyPass, missing, fineWon, allFine, underMonths, warningCount: Math.max(0, underMonths - 1) };
+  return { events: events.length, regularEvents: regularEvents.length, units, regularUnits, monthlyRate, allEvents: allEvents.length, allUnits, allRate, monthlyPass, missing, fineWon, allFine, underMonths, warningCount: Math.max(0, underMonths - 1) };
 }
 
 function memberStatsWithoutMonth(memberId, month) {
@@ -214,15 +219,16 @@ function memberStatsWithoutMonth(memberId, month) {
 
 function memberStatsBase(memberId, month) {
   const events = state.events.filter((event) => event.date.slice(0, 7) === month);
+  const regularEvents = events.filter(isRegularEvent);
   const records = new Map(state.records.filter((record) => record.memberId === memberId).map((record) => [record.eventId, record]));
-  let units = 0;
-  events.forEach((event) => { const record = records.get(event.id); if (record) units += eventUnits(event, record.status); });
+  let regularUnits = 0;
+  regularEvents.forEach((event) => { const record = records.get(event.id); if (record) regularUnits += eventUnits(event, record.status); });
   const allEvents = state.events.filter((event) => event.date <= `${month}-31`);
   let allUnits = 0;
   allEvents.forEach((event) => { const record = records.get(event.id); if (record) allUnits += eventUnits(event, record.status); });
-  const monthlyRate = events.length ? units / events.length : 0;
+  const monthlyRate = regularEvents.length ? regularUnits / regularEvents.length : 0;
   const allRate = allEvents.length ? allUnits / allEvents.length : 0;
-  return { monthlyPass: events.length > 0 && monthlyRate >= 0.5 && allRate >= 0.5 };
+  return { monthlyPass: regularEvents.length > 0 && monthlyRate >= 0.5 && allRate >= 0.5 };
 }
 
 function statusBadge(stats) {
@@ -255,36 +261,40 @@ function render() {
 
 function renderDashboard() {
   const monthEvents = state.events.filter((event) => event.date.slice(0, 7) === selectedMonth);
+  const detailEvents = [...monthEvents].sort((a, b) => (a.type === "photo" ? 1 : 0) - (b.type === "photo" ? 1 : 0) || `${a.date}${a.id}`.localeCompare(`${b.date}${b.id}`));
+  let regularIndex = 0;
+  const detailRows = detailEvents.map((event) => {
+    const month = Number(event.date?.slice(5, 7) || 0);
+    const location = event.location || "장소 미등록";
+    if (isRegularEvent(event)) {
+      regularIndex += 1;
+      return `<div><span>${escapeHtml(event.date || "0000-00-00")} ${month}월 ${regularIndex}차 ${escapeHtml(location)} 정기출사</span></div>`;
+    }
+    return `<div><span>${escapeHtml(event.date || "0000-00-00")} ${month}월 ${escapeHtml(location)} 번개</span></div>`;
+  }).join("");
   const stats = state.members.map((member) => ({ member, stats: memberStats(member.id) }));
-  const passed = stats.filter(({ stats: item }) => item.monthlyPass).length;
-  const warnings = stats.reduce((sum, item) => sum + item.stats.warningCount, 0);
-  const missing = stats.reduce((sum, item) => sum + item.stats.missing, 0);
   const averageRate = stats.length ? stats.reduce((sum, item) => sum + item.stats.monthlyRate, 0) / stats.length : 0;
+  const query = memberSearch.trim().toLocaleLowerCase("ko-KR");
+  const visibleStats = query ? stats.filter(({ member }) => member.name.toLocaleLowerCase("ko-KR").includes(query)) : stats;
   const recent = [...state.records].sort((a, b) => {
     const eventA = getEvent(a.eventId);
     const eventB = getEvent(b.eventId);
     return `${eventB?.date || ""}${b.recordedAt || ""}`.localeCompare(`${eventA?.date || ""}${a.recordedAt || ""}`);
   }).slice(0, 6);
+  const activityKings = [...stats].sort((a, b) => b.stats.monthlyRate - a.stats.monthlyRate || b.stats.regularUnits - a.stats.regularUnits || a.member.name.localeCompare(b.member.name, "ko")).slice(0, 10);
   return `<div class="view-stack">
-    <div class="kpi-grid">
-      <div class="kpi-card"><span class="kpi-label">${escapeHtml(selectedMonth)} 행사</span><strong class="kpi-value">${monthEvents.length}<small>회</small></strong><span class="kpi-foot">등록된 전체 행사</span></div>
-      <div class="kpi-card"><span class="kpi-label">기준 충족 회원</span><strong class="kpi-value">${passed}<small>명</small></strong><span class="kpi-foot">전체 ${state.members.length}명 기준</span></div>
-      <div class="kpi-card"><span class="kpi-label">누적 출석 경고</span><strong class="kpi-value">${warnings}<small>회</small></strong><span class="kpi-foot">2개월 미달부터 누적</span></div>
-      <div class="kpi-card"><span class="kpi-label">미입력 기록</span><strong class="kpi-value">${missing}<small>건</small></strong><span class="kpi-foot">행사별 회원 기록</span></div>
+    <div class="kpi-grid kpi-grid-single">
+      <details class="kpi-card kpi-details"><summary><span class="kpi-summary-content"><span class="kpi-label">21기 행사</span><strong class="kpi-value">${monthEvents.length}<small>회</small></strong><span class="kpi-foot">${escapeHtml(selectedMonth)} 등록 행사</span></span><span class="kpi-toggle">세부기록</span></summary><div class="kpi-detail-list">${detailRows || `<div><span>등록된 행사가 없습니다.</span></div>`}</div></details>
     </div>
-    <div class="dashboard-grid">
+    <div class="dashboard-grid dashboard-grid-top">
       <section class="panel">
-        <div class="panel-header"><div><h2 class="panel-title">회원별 기준 현황</h2><p class="panel-desc">누적 출석과 참여율을 함께 확인합니다. 월별·전체 참여율이 모두 50% 이상이어야 기준을 충족합니다.</p></div><div class="header-control"><label class="subtle" for="dashboard-month">기준월</label><select id="dashboard-month" class="select compact">${monthOptions()}</select></div></div>
-        <div class="table-wrap"><table class="data-table"><thead><tr><th>회원</th><th>이달의 누적 출석</th><th>전체 누적 출석</th><th>월 참여율</th><th>전체 참여율</th><th>판정</th><th>경고</th><th>월 벌금</th></tr></thead><tbody>${stats.length ? stats.map(({ member, stats: item }) => `<tr><td class="primary-cell"><span class="avatar">${escapeHtml(initials(member.name))}</span>${escapeHtml(member.name)}<br><small class="subtle">${escapeHtml(memberLabel(member))}</small></td><td class="number-cell">${item.units}회</td><td class="number-cell">${item.allUnits}회</td><td class="number-cell">${percent(item.monthlyRate)}</td><td class="number-cell">${percent(item.allRate)}</td><td>${statusBadge(item)}</td><td>${item.warningCount ? `<span class="badge bad">누적 ${item.warningCount}회</span>` : `<span class="subtle">없음</span>`}</td><td class="number-cell">${money(item.fineWon)}</td></tr>`).join("") : `<tr><td colspan="8" class="empty">먼저 회원과 행사를 등록하세요.</td></tr>`}</tbody></table></div>
-      </section>
-      <section class="panel">
-        <div class="panel-header"><div><h2 class="panel-title">${escapeHtml(selectedMonth)} 참여율</h2><p class="panel-desc">회원별 월 참여율 평균</p></div><span class="badge ${averageRate >= .5 ? "good" : "warn"}">${percent(averageRate)}</span></div>
-        <div class="progress-area"><div class="progress-row"><div class="progress-meta"><span>월 참여율 평균</span><strong>${percent(averageRate)}</strong></div><div class="progress-track"><div class="progress-fill ${averageRate >= .5 ? "green" : "orange"}" style="width:${Math.min(100, averageRate * 100)}%"></div></div></div><div class="progress-row"><div class="progress-meta"><span>기준선</span><strong>50%</strong></div><div class="progress-track"><div class="progress-fill" style="width:50%"></div></div></div></div>
-        <div class="section-divider"></div>
-        <div class="rules-mini"><div class="rule-line"><span>공식 출사 / 행사</span><strong>출석 1회</strong></div><div class="rule-line"><span>사진 번개</span><strong>출석 0.5회</strong></div><div class="rule-line"><span>오후 2시 이후 참석</span><strong>벌금 2,000원</strong></div><div class="rule-line"><span>무단 결석</span><strong>벌금 5,000원</strong></div></div>
+        <div class="panel-header"><div><h2 class="panel-title">회원별 기준 현황</h2><p class="panel-desc">누적 출석과 참여율을 함께 확인합니다. 월 참여율은 정기출사 기준이며, 월별·전체 참여율이 모두 50% 이상이어야 기준을 충족합니다.</p></div><div class="header-control dashboard-filters"><label class="filter-field"><span class="subtle">기준월</span><select id="dashboard-month" class="select compact">${monthOptions()}</select></label><label class="filter-field"><span class="subtle">회원 검색</span><input id="member-search" class="input compact" type="search" placeholder="이름 입력" value="${escapeHtml(memberSearch)}"></label></div></div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>회원</th><th>이달의 누적 출석</th><th>전체 누적 출석</th><th>월 참여율</th><th>전체 참여율</th><th>판정</th><th>경고</th><th>월 벌금</th></tr></thead><tbody>${visibleStats.length ? visibleStats.map(({ member, stats: item }) => `<tr><td class="primary-cell"><span class="avatar">${escapeHtml(initials(member.name))}</span>${escapeHtml(member.name)}<br><small class="subtle">${escapeHtml(memberLabel(member))}</small></td><td class="number-cell">${item.units}회</td><td class="number-cell">${item.allUnits}회</td><td class="number-cell">${percent(item.monthlyRate)}</td><td class="number-cell">${percent(item.allRate)}</td><td>${statusBadge(item)}</td><td>${item.warningCount ? `<span class="badge bad">누적 ${item.warningCount}회</span>` : `<span class="subtle">없음</span>`}</td><td class="number-cell">${money(item.fineWon)}</td></tr>`).join("") : `<tr><td colspan="8" class="empty">검색 결과가 없습니다.</td></tr>`}</tbody></table></div>
       </section>
     </div>
     <section class="panel"><div class="panel-header"><div><h2 class="panel-title">최근 출결 기록</h2><p class="panel-desc">가장 최근 행사부터 표시합니다.</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th>행사일</th><th>행사</th><th>회원</th><th>상태</th><th>벌금</th></tr></thead><tbody>${recent.length ? recent.map((record) => { const event = getEvent(record.eventId); const member = getMember(record.memberId); return `<tr><td>${formatDate(event?.date)}</td><td class="primary-cell">${escapeHtml(event?.name)}</td><td>${escapeHtml(member?.name)}</td><td>${recordBadge(record.status)}</td><td class="number-cell">${money(fine(record.status))}</td></tr>`; }).join("") : `<tr><td colspan="5" class="empty">아직 출결 기록이 없습니다.</td></tr>`}</tbody></table></div></section>
+    <section class="panel"><div class="panel-header"><div><h2 class="panel-title">이달의 활동왕</h2><p class="panel-desc">정기출사 참여율이 높은 회원 TOP10</p></div></div><div class="table-wrap"><table class="data-table activity-table"><thead><tr><th>순위</th><th>회원</th><th>정기출사 참여율</th><th>출석</th></tr></thead><tbody>${activityKings.length ? activityKings.map(({ member, stats: item }, index) => `<tr><td class="number-cell">${index + 1}</td><td class="primary-cell"><span class="avatar">${escapeHtml(initials(member.name))}</span>${escapeHtml(member.name)}<br><small class="subtle">${escapeHtml(memberLabel(member))}</small></td><td class="number-cell">${percent(item.monthlyRate)}</td><td class="number-cell">${item.regularUnits}회</td></tr>`).join("") : `<tr><td colspan="4" class="empty">표시할 회원이 없습니다.</td></tr>`}</tbody></table></div></section>
+    <section class="panel"><div class="panel-header"><div><h2 class="panel-title">이번달 참여율</h2><p class="panel-desc">정기출사 기준 회원별 참여율 평균</p></div><span class="badge ${averageRate >= .5 ? "good" : "warn"}">${percent(averageRate)}</span></div><div class="progress-area"><div class="progress-row"><div class="progress-meta"><span>정기출사 참여율 평균</span><strong>${percent(averageRate)}</strong></div><div class="progress-track"><div class="progress-fill ${averageRate >= .5 ? "green" : "orange"}" style="width:${Math.min(100, averageRate * 100)}%"></div></div></div><div class="progress-row"><div class="progress-meta"><span>기준선</span><strong>50%</strong></div><div class="progress-track"><div class="progress-fill" style="width:50%"></div></div></div></div></section>
   </div>`;
 }
 
@@ -315,7 +325,7 @@ function renderEvents() {
 }
 
 function renderRules() {
-  return `<div class="rules-grid"><section class="rule-card"><h3>출석 단위</h3><p>행사 유형별 참석 횟수를 자동으로 환산합니다.</p><div class="rule-metric"><span>공식 출사 / 행사</span><strong>1회</strong></div><div class="rule-metric"><span>사진 번개</span><strong>0.5회</strong></div></section><section class="rule-card"><h3>출석률 기준</h3><p>아래 두 조건을 동시에 충족해야 해당 월 기준을 충족합니다.</p><div class="rule-metric"><span>월 행사 대비 참여율</span><strong>50% 이상</strong></div><div class="rule-metric"><span>전체 행사 대비 참여율</span><strong>50% 이상</strong></div><div class="formula-box"><strong>판정</strong><br>월 참여 단위 ÷ 월 행사 수 ≥ 50%<br>그리고 전체 참여 단위 ÷ 전체 행사 수 ≥ 50%</div></section><section class="rule-card"><h3>지각·늦참 및 불참</h3><p>오후 2시를 기준으로 상태와 벌금을 적용합니다.</p><div class="fine-grid"><div class="fine-item"><span>오후 2시까지 참석</span><strong>출석 1회 · 0원</strong></div><div class="fine-item"><span>오후 2시 이후 참석</span><strong>출석 1회 · 2,000원</strong></div><div class="fine-item"><span>사전 연락 후 불참</span><strong>출석 0회 · 3,000원</strong></div><div class="fine-item"><span>사전 연락 없이 불참</span><strong>출석 0회 · 5,000원</strong></div></div></section><section class="rule-card"><h3>출석 경고</h3><p>출석률 기준을 충족하지 못한 월을 누적해 표시합니다.</p><div class="rule-metric"><span>2개월 미달</span><strong>누계 1회</strong></div><div class="rule-metric"><span>3개월 미달</span><strong>누계 2회</strong></div><div class="formula-box"><strong>현재 계산</strong><br>누적 경고 = max(0, 기준 미달 월수 - 1)<br>행사 기록이 없는 월은 미달 월수에서 제외합니다.</div></section></div>`;
+  return `<div class="rules-grid"><section class="rule-card"><h3>출석 단위</h3><p>행사 유형별 참석 횟수를 자동으로 환산합니다.</p><div class="rule-metric"><span>공식 출사 / 행사</span><strong>1회</strong></div><div class="rule-metric"><span>사진 번개</span><strong>0.5회</strong></div></section><section class="rule-card"><h3>출석률 기준</h3><p>아래 두 조건을 동시에 충족해야 해당 월 기준을 충족합니다.</p><div class="rule-metric"><span>정기출사 대비 참여율</span><strong>50% 이상</strong></div><div class="rule-metric"><span>전체 행사 대비 참여율</span><strong>50% 이상</strong></div><div class="formula-box"><strong>판정</strong><br>정기출사 참여 단위 ÷ 정기출사 수 ≥ 50%<br>그리고 전체 참여 단위 ÷ 전체 행사 수 ≥ 50%</div></section><section class="rule-card"><h3>지각·늦참 및 불참</h3><p>오후 2시를 기준으로 상태와 벌금을 적용합니다.</p><div class="fine-grid"><div class="fine-item"><span>오후 2시까지 참석</span><strong>출석 1회 · 0원</strong></div><div class="fine-item"><span>오후 2시 이후 참석</span><strong>출석 1회 · 2,000원</strong></div><div class="fine-item"><span>사전 연락 후 불참</span><strong>출석 0회 · 3,000원</strong></div><div class="fine-item"><span>사전 연락 없이 불참</span><strong>출석 0회 · 5,000원</strong></div></div></section><section class="rule-card"><h3>출석 경고</h3><p>출석률 기준을 충족하지 못한 월을 누적해 표시합니다.</p><div class="rule-metric"><span>2개월 미달</span><strong>누계 1회</strong></div><div class="rule-metric"><span>3개월 미달</span><strong>누계 2회</strong></div><div class="formula-box"><strong>현재 계산</strong><br>누적 경고 = max(0, 기준 미달 월수 - 1)<br>행사 기록이 없는 월은 미달 월수에서 제외합니다.</div></section></div>`;
 }
 
 function saveAttendance() {
@@ -417,6 +427,15 @@ document.addEventListener("change", (event) => {
   if (event.target.id === "event-select") { selectedEventId = event.target.value; render(); }
   if (event.target.id === "member-note") updateMemberDepartmentField();
   if (event.target.matches(".status-select, .attendance-time-input")) updateAttendanceRow(event.target.closest(".attendance-row"));
+});
+
+document.addEventListener("input", (event) => {
+  if (event.target.id !== "member-search") return;
+  memberSearch = event.target.value;
+  const cursor = event.target.selectionStart;
+  render();
+  const nextSearch = $("#member-search");
+  if (nextSearch) { nextSearch.focus(); nextSearch.setSelectionRange(cursor, cursor); }
 });
 
 document.addEventListener("submit", (event) => {

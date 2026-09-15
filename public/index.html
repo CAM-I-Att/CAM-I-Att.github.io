@@ -33,15 +33,22 @@
         <span>회원 필터</span>
         <select id="member-select" aria-label="회원 필터"><option value="all">전체 회원</option></select>
       </label>
+      <label>
+        <span>회원 검색</span>
+        <input id="member-search" aria-label="회원 검색" type="search" placeholder="이름 입력">
+      </label>
     </section>
 
     <section id="summary-cards" class="summary-grid" aria-label="요약"></section>
     <section id="member-section" class="panel"></section>
+    <section id="recent-section" class="panel"></section>
+    <section id="activity-section" class="panel"></section>
+    <section id="rate-section" class="panel"></section>
     <section id="event-section" class="panel"></section>
 
     <footer class="footer">
       <span>공개용 데이터는 관리자 페이지에서 갱신 후 GitHub에 반영됩니다.</span>
-      <span>출결 규정: 월 참여율·전체 참여율 모두 50% 이상</span>
+      <span>출결 규정: 정기출사 참여율·전체 참여율 모두 50% 이상</span>
     </footer>
   </main>
   <script src="./public.js" defer></script>
