@@ -4,3 +4,6 @@ data/attendance_summary.csv
 data/attendance.xlsx
 __pycache__/
 .DS_Store
+
+data/backups/
+data/import-preview.json

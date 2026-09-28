@@ -1,63 +1,1143 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-15T11:00:20",
+  "generatedAt": "2026-09-28T15:31:49",
+  "rosterReady": true,
+  "monthlyReports": [
+    {
+      "memberId": "O-B25ADA4D",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 3.0,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-C3A2BBA7",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-C95B964A",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-952EB328",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 3.5,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 1.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-D869081E",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 2.5,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 1.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-96C3A041",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-AF272FEF",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 1.5,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 1.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-7BFF9CA3",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-2BD7ADA2",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-23828462",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-805B8545",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 3.0,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-1314C366",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-1F3823D7",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 3.0,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-57E66CB8",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-7CE13E3F",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-301E47E7",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-3F5A6D0D",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-D3C3870D",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-6EF6CB23",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-79B59ACE",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-6ED72684",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 3.0,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-FDAD6FC5",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 2.0,
+      "units": 0.0,
+      "finalized": true,
+      "regularUnits": 0.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-0F4FB4E7",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-D88537A3",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 1.5,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 1.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-B4B2B243",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.5,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 1.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-2280E5F7",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-F64EDBB4",
+      "month": "2026-09",
+      "term": "21기",
+      "activities": 3.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-09-05",
+          "name": "OT",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-12",
+          "name": "서촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-09-19",
+          "name": "푸른수목원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    }
+  ],
+  "monthlySchedule": [
+    {
+      "date": "2026-10-03",
+      "name": "정기출사",
+      "type": "regular"
+    },
+    {
+      "date": "2026-10-10",
+      "name": "정기출사",
+      "type": "regular"
+    },
+    {
+      "date": "2026-10-17",
+      "name": "중간고사 휴회",
+      "type": "break"
+    },
+    {
+      "date": "2026-10-24",
+      "name": "정기출사",
+      "type": "regular"
+    },
+    {
+      "date": "2026-10-31",
+      "name": "정기출사",
+      "type": "regular"
+    },
+    {
+      "date": "2026-09-05",
+      "name": "OT",
+      "type": "official"
+    },
+    {
+      "date": "2026-09-12",
+      "name": "서촌",
+      "type": "official"
+    },
+    {
+      "date": "2026-09-19",
+      "name": "푸른수목원",
+      "type": "official"
+    },
+    {
+      "date": "2026-09-11",
+      "name": "반포한강공원 야간출사",
+      "type": "photo"
+    },
+    {
+      "date": "2026-09-29",
+      "name": "표기식 사진전",
+      "type": "photo"
+    },
+    {
+      "date": "2026-09-30",
+      "name": "이촌 한강공원",
+      "type": "photo"
+    }
+  ],
   "members": [
     {
       "id": "O-B25ADA4D",
       "name": "강남주",
       "note": "운영진",
       "department": "총괄",
-      "cohort": "20"
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
     },
     {
-      "id": "O-3F5A6D0D",
-      "name": "이준우",
-      "note": "운영진",
-      "department": "출결",
-      "cohort": "21"
+      "id": "M-C3A2BBA7",
+      "name": "김민서",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
     },
     {
-      "id": "O-2BD7ADA2",
-      "name": "변지은",
-      "note": "운영진",
-      "department": "정보",
-      "cohort": "20"
-    },
-    {
-      "id": "O-F64EDBB4",
-      "name": "한시우",
-      "note": "운영진",
-      "department": "정보",
-      "cohort": "21"
+      "id": "M-C95B964A",
+      "name": "김승희",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
     },
     {
       "id": "O-952EB328",
       "name": "김태건",
       "note": "운영진",
       "department": "홍보",
-      "cohort": "21"
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-D869081E",
+      "name": "나혜영",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-96C3A041",
+      "name": "문정윤",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-AF272FEF",
+      "name": "민진홍",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-7BFF9CA3",
+      "name": "박세훈",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-542BB68E",
+      "name": "박소이",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": false,
+      "membershipStatus": "휴학"
+    },
+    {
+      "id": "O-2BD7ADA2",
+      "name": "변지은",
+      "note": "운영진",
+      "department": "정보",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-23828462",
+      "name": "송연화",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-805B8545",
+      "name": "안소은",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-1314C366",
+      "name": "안아영",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
     },
     {
       "id": "O-1F3823D7",
       "name": "양승찬",
       "note": "운영진",
       "department": "총무",
-      "cohort": "20"
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-57E66CB8",
+      "name": "유현도",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-7CE13E3F",
+      "name": "윤여루",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-301E47E7",
+      "name": "이진욱",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "O-3F5A6D0D",
+      "name": "이준우",
+      "note": "운영진",
+      "department": "출결",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-D3C3870D",
+      "name": "이지원",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-6EF6CB23",
+      "name": "이호슬",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "19",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-79B59ACE",
+      "name": "이어진",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-6ED72684",
+      "name": "장우리",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-FDAD6FC5",
+      "name": "정승현",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "20",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-0F4FB4E7",
+      "name": "정혜원",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-D88537A3",
+      "name": "주우현",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-B4B2B243",
+      "name": "주지성",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "M-2280E5F7",
+      "name": "최희은",
+      "note": "일반 회원",
+      "department": "",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
+    },
+    {
+      "id": "O-F64EDBB4",
+      "name": "한시우",
+      "note": "운영진",
+      "department": "정보",
+      "cohort": "21",
+      "active": true,
+      "membershipStatus": "활동"
     }
   ],
   "events": [
     {
       "id": "E-mu0ud0gb-juejp",
       "date": "2026-09-12",
-      "name": "9/12 서촌 정기 출사",
+      "name": "9/12 서촌 정기출사",
       "type": "official",
       "startTime": "14:00",
-      "location": "서촌(경복궁역 2번출구)"
+      "location": "서촌"
     },
     {
       "id": "E-mu0ueafb-846uj",
       "date": "2026-09-11",
-      "name": "반포한강공원 야간출사 번개",
+      "name": "반포한강공원 야간출사",
       "type": "photo",
       "startTime": "18:00",
       "location": "반포한강공원"
@@ -65,16 +1145,132 @@
     {
       "id": "E-mu0uf6d9-xe6yx",
       "date": "2026-09-19",
-      "name": "9/19 구로 푸른수목원 정기출사",
+      "name": "9/19 푸른수목원 정기출사",
       "type": "official",
       "startTime": "14:00",
-      "location": "구로 푸른수목원"
+      "location": "푸른수목원"
+    },
+    {
+      "id": "E-XLSX-20260905",
+      "date": "2026-09-05",
+      "name": "9/5 OT",
+      "type": "official",
+      "startTime": "14:00",
+      "location": "OT"
     }
   ],
   "records": [
     {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "O-B25ADA4D",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "O-952EB328",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-AF272FEF",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-7BFF9CA3",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "O-2BD7ADA2",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-23828462",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-805B8545",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "O-1F3823D7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "O-3F5A6D0D",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-79B59ACE",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-6ED72684",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-0F4FB4E7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-D88537A3",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-B4B2B243",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "M-2280E5F7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-XLSX-20260905",
+      "memberId": "O-F64EDBB4",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
       "eventId": "E-mu0ud0gb-juejp",
       "memberId": "O-B25ADA4D",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-C3A2BBA7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-C95B964A",
       "status": "present",
       "attendanceTime": ""
     },
@@ -86,7 +1282,31 @@
     },
     {
       "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-D869081E",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
       "memberId": "O-2BD7ADA2",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-23828462",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-805B8545",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-1314C366",
       "status": "present",
       "attendanceTime": ""
     },
@@ -98,13 +1318,151 @@
     },
     {
       "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-57E66CB8",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-7CE13E3F",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-301E47E7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
       "memberId": "O-3F5A6D0D",
       "status": "present",
       "attendanceTime": ""
     },
     {
       "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-D3C3870D",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-6EF6CB23",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-79B59ACE",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-6ED72684",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-B4B2B243",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
+      "memberId": "M-2280E5F7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ud0gb-juejp",
       "memberId": "O-F64EDBB4",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "O-B25ADA4D",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "O-952EB328",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "M-D869081E",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "M-96C3A041",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "M-7BFF9CA3",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "M-805B8545",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "O-1F3823D7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "M-6ED72684",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0uf6d9-xe6yx",
+      "memberId": "M-0F4FB4E7",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ueafb-846uj",
+      "memberId": "O-952EB328",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ueafb-846uj",
+      "memberId": "M-D869081E",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ueafb-846uj",
+      "memberId": "M-AF272FEF",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ueafb-846uj",
+      "memberId": "M-D88537A3",
+      "status": "present",
+      "attendanceTime": ""
+    },
+    {
+      "eventId": "E-mu0ueafb-846uj",
+      "memberId": "M-B4B2B243",
       "status": "present",
       "attendanceTime": ""
     }

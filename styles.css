@@ -198,3 +198,5 @@ h1 { margin-bottom: 8px; font-size: 31px; line-height: 1.16; letter-spacing: -.0
   .toolbar-left .field { min-width: 0; }
   .toolbar > .button { width: 100%; margin-top: 12px; }
 }
+
+.main-content {background:#f7f8f3;}

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import base64
 import json
 import mimetypes
 import os
@@ -12,6 +13,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 from zipfile import ZIP_DEFLATED, ZipFile
+from monthly_import import parse_workbook, match_members, apply_preview
 
 
 ROOT = Path(__file__).resolve().parent
@@ -36,7 +38,7 @@ STATUS_LABELS = {
 FINE_BY_STATUS = {
     "present": 0,
     "late": 2000,
-    "contact_absent": 3000,
+    "contact_absent": 0,
     "unexcused_absent": 5000,
 }
 MEMBER_ROLES = {"운영진", "일반 회원"}
@@ -66,55 +68,9 @@ def status_label(status: str | None) -> str:
 
 
 def seed_state() -> dict[str, Any]:
-    today = date.today()
-    current_month = today.replace(day=1)
-    def d(month_offset: int, day: int) -> str:
-        month = current_month.month + month_offset
-        year = current_month.year + (month - 1) // 12
-        month = (month - 1) % 12 + 1
-        return date(year, month, min(day, 28)).isoformat()
-
-    members = [
-        {"id": "M001", "name": "김민지", "note": "일반 회원", "department": "", "cohort": "", "active": True},
-        {"id": "M002", "name": "박서준", "note": "일반 회원", "department": "", "cohort": "", "active": True},
-        {"id": "M003", "name": "이하은", "note": "일반 회원", "department": "", "cohort": "", "active": True},
-        {"id": "M004", "name": "정도윤", "note": "일반 회원", "department": "", "cohort": "", "active": True},
-        {"id": "M005", "name": "최유진", "note": "일반 회원", "department": "", "cohort": "", "active": True},
-    ]
-    events = [
-        {"id": "E001", "date": d(-2, 16), "name": "여름 정기 출사", "type": "official", "startTime": "14:00", "location": "서울숲", "note": ""},
-        {"id": "E002", "date": d(-1, 7), "name": "도심 야경 출사", "type": "official", "startTime": "14:00", "location": "을지로", "note": ""},
-        {"id": "E003", "date": d(-1, 22), "name": "주말 사진 번개", "type": "photo", "startTime": "14:00", "location": "한강공원", "note": ""},
-        {"id": "E004", "date": d(0, 2), "name": "정기 모임", "type": "official", "startTime": "14:00", "location": "클럽룸", "note": ""},
-        {"id": "E005", "date": d(0, 6), "name": "비 오는 날 번개", "type": "photo", "startTime": "14:00", "location": "성수동", "note": ""},
-    ]
-    records: list[dict[str, Any]] = []
-    statuses = {
-        "E001": ["present", "late", "contact_absent", "unexcused_absent", "present"],
-        "E002": ["present", "present", "late", "contact_absent", "unexcused_absent"],
-        "E003": ["present", "present", "present", "late", "contact_absent"],
-        "E004": ["present", "late", "present", "present", "contact_absent"],
-        "E005": ["present", "present", "late", "unexcused_absent", "present"],
-    }
-    for event in events:
-        for index, member in enumerate(members):
-            status = statuses[event["id"]][index]
-            records.append({
-                "id": f"R-{event['id']}-{member['id']}",
-                "eventId": event["id"],
-                "memberId": member["id"],
-                "status": status,
-                "attendanceTime": "14:15" if status == "late" else ("13:50" if status == "present" else ""),
-                "note": "샘플 데이터" if event["id"] == "E001" else "",
-                "recordedAt": now_iso(),
-            })
-    return {
-        "version": 1,
-        "sampleData": True,
-        "members": members,
-        "events": events,
-        "records": records,
-    }
+    return {"version": 2, "sampleData": False, "rosterReady": False,
+            "members": [], "events": [], "records": [],
+            "monthlyReports": [], "monthlySchedule": []}
 
 
 def clean_state(raw: dict[str, Any]) -> dict[str, Any]:
@@ -140,6 +96,8 @@ def clean_state(raw: dict[str, Any]) -> dict[str, Any]:
                 "department": department,
                 "cohort": cohort,
                 "active": bool(item.get("active", True)),
+                "membershipStatus": str(item.get("membershipStatus", "활동" if item.get("active", True) else "비활동")),
+                "rosterIncluded": item.get("rosterIncluded", True) is not False,
             })
     events = []
     for item in raw.get("events", []):
@@ -169,7 +127,8 @@ def clean_state(raw: dict[str, Any]) -> dict[str, Any]:
         status = str(item.get("status", "")).strip()
         if event_id in event_ids and member_id in member_ids and status in STATUS_LABELS:
             attendance_time = str(item.get("attendanceTime", item.get("checkInTime", ""))).strip()
-            if status == "present" and len(attendance_time) == 5 and attendance_time > "14:00":
+            event = next(e for e in events if e["id"] == event_id)
+            if status == "present" and len(attendance_time) == 5 and attendance_time > event["startTime"]:
                 status = "late"
             records.append({
                 "id": str(item.get("id", "")) or f"R-{uuid.uuid4().hex[:12]}",
@@ -183,6 +142,9 @@ def clean_state(raw: dict[str, Any]) -> dict[str, Any]:
     return {
         "version": 1,
         "sampleData": bool(raw.get("sampleData", False)),
+        "rosterReady": raw.get("rosterReady") is True,
+        "monthlyReports": raw.get("monthlyReports", []),
+        "monthlySchedule": raw.get("monthlySchedule", []),
         "members": members,
         "events": events,
         "records": records,
@@ -254,6 +216,18 @@ def detail_rows(state: dict[str, Any]) -> list[list[Any]]:
 
 
 def calculate_member_month(state: dict[str, Any], member_id: str, month: str) -> dict[str, Any]:
+    reports = [r for r in state.get("monthlyReports", []) if r["memberId"] == member_id]
+    report = next((r for r in reports if r["month"] == month), None)
+    if report:
+        term = [r for r in reports if r["term"] == report["term"] and r["month"] <= month]
+        count = sum(r["activities"] for r in term)
+        units = sum(r["units"] for r in term)
+        monthly_rate = report["units"] / report["activities"] if report["activities"] else 0
+        all_rate = units / count if count else 0
+        return {"month":month, "eventCount":report["activities"], "participationUnits":report["units"],
+                "monthlyRate":monthly_rate, "allEventCount":count, "allParticipationUnits":units,
+                "allRate":all_rate, "monthlyPass":monthly_rate >= .5 and all_rate >= .5,
+                "missingCount":0, "fineWon":"", "allFineWon":""}
     events = [event for event in state["events"] if month_key(event["date"]) == month]
     event_map = {event["id"]: event for event in state["events"]}
     record_map = {(record["eventId"], record["memberId"]): record for record in state["records"]}
@@ -294,16 +268,22 @@ def calculate_member_month(state: dict[str, Any], member_id: str, month: str) ->
 
 
 def summary_rows(state: dict[str, Any]) -> list[list[Any]]:
-    months = sorted({month_key(event["date"]) for event in state["events"]})
+    months = sorted({month_key(event["date"]) for event in state["events"]} | {r["month"] for r in state.get("monthlyReports", [])})
     rows = []
     for month in months:
         for member in sorted(state["members"], key=lambda item: item["name"]):
+            if not member.get("active", True) or not member.get("rosterIncluded", True):
+                continue
             stats = calculate_member_month(state, member["id"], month)
             active_months = [item for item in months if item <= month and any(month_key(event["date"]) == item for event in state["events"])]
-            under_count = sum(
-                1 for item in active_months
-                if not calculate_member_month(state, member["id"], item)["monthlyPass"]
-            )
+            report = next((r for r in state.get("monthlyReports", []) if r["memberId"] == member["id"] and r["month"] == month), None)
+            under_count = sum(1 for r in state.get("monthlyReports", [])
+                              if report and r["memberId"] == member["id"] and r["term"] == report["term"]
+                              and r["month"] <= month and r.get("finalized") and r["activities"] > 0
+                              and r["units"] / r["activities"] < .5) if report else sum(
+                1 for item in active_months if item < date.today().isoformat()[:7]
+                and not calculate_member_month(state, member["id"], item)["missingCount"]
+                and calculate_member_month(state, member["id"], item)["monthlyRate"] < .5)
             rows.append([
                 month,
                 member["id"],
@@ -320,7 +300,7 @@ def summary_rows(state: dict[str, Any]) -> list[list[Any]]:
                 "충족" if stats["monthlyPass"] else "미달",
                 stats["missingCount"],
                 under_count,
-                max(0, under_count - 1),
+                min(2, max(0, under_count - 1)),
                 stats["fineWon"],
             ])
     return rows
@@ -330,6 +310,9 @@ def public_snapshot(state: dict[str, Any]) -> dict[str, Any]:
     return {
         "version": 1,
         "generatedAt": now_iso(),
+        "rosterReady": state.get("rosterReady") is True,
+        "monthlyReports": [{**{k:r[k] for k in ("memberId","month","term","activities","units","finalized")}, "regularUnits": r.get("regularUnits", r.get("units", 0)), "lightningCount": r.get("lightningCount", 0), "attendance": r.get("attendance", [])} for r in state.get("monthlyReports", [])] if state.get("rosterReady") else [],
+        "monthlySchedule": [{k:e[k] for k in ("date","name","type")} for e in state.get("monthlySchedule", [])],
         "members": [
             {
                 "id": member["id"],
@@ -337,8 +320,10 @@ def public_snapshot(state: dict[str, Any]) -> dict[str, Any]:
                 "note": member.get("note", ""),
                 "department": member.get("department", ""),
                 "cohort": member.get("cohort", ""),
+                "active": member.get("active", True),
+                "membershipStatus": member.get("membershipStatus", "활동"),
             }
-            for member in state["members"]
+            for member in state["members"] if state.get("rosterReady") and member.get("rosterIncluded", True)
         ],
         "events": [
             {
@@ -358,7 +343,7 @@ def public_snapshot(state: dict[str, Any]) -> dict[str, Any]:
                 "status": record["status"],
                 "attendanceTime": record.get("attendanceTime", ""),
             }
-            for record in state["records"]
+            for record in state["records"] if state.get("rosterReady") and any(m["id"] == record["memberId"] and m.get("rosterIncluded", True) for m in state["members"])
         ],
     }
 
@@ -549,6 +534,32 @@ class AppHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:
         parsed = urlparse(self.path)
+        if parsed.path in ("/api/import/preview", "/api/import/apply"):
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+                if not 0 < length <= 7_000_000:
+                    raise ValueError("5MB 이하의 출결표를 선택하세요.")
+                payload = json.loads(self.rfile.read(length))
+                content = base64.b64decode(payload.get("content", ""), validate=True)
+                if len(content) > 5_000_000:
+                    raise ValueError("5MB 이하의 출결표를 선택하세요.")
+                preview = parse_workbook(content, payload.get("filename", "출결표.xlsx"), payload.get("month", ""), payload.get("term", ""))
+                state = clean_state(json.loads(STATE_FILE.read_text(encoding="utf-8")))
+                _, blockers = match_members(preview, state)
+                if parsed.path.endswith("preview"):
+                    self._json(200, {"preview":preview, "blockers":blockers})
+                else:
+                    if payload.get("acceptSummary") is not True:
+                        raise ValueError("집계 기준과 월별 확정을 확인하세요.")
+                    updated = apply_preview(state, preview, True)
+                    backup = DATA_DIR / "backups"
+                    backup.mkdir(exist_ok=True)
+                    (backup / f"state-{uuid.uuid4().hex}.json").write_text(json.dumps(state,ensure_ascii=False),encoding="utf-8")
+                    state = save_state(updated)
+                    self._json(200, {"state":state,"sync":sync_info()})
+            except (ValueError, TypeError, AttributeError, OSError) as exc:
+                self._json(400, {"error":f"출결표를 반영하지 못했습니다: {exc}"})
+            return
         if parsed.path != "/api/state":
             self._json(404, {"error": "Not found"})
             return

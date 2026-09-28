@@ -1,0 +1,112 @@
+.attendance-board { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:stretch; }
+.board-toolbar {display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px;}
+.board-kicker {font-size:10px;font-weight:750;letter-spacing:.16em;color:#728275;}
+.board-toolbar p {margin:6px 0 0;font-size:20px;font-weight:650;letter-spacing:-.04em;color:#263a32;}
+.board-month {display:flex;align-items:center;gap:10px;font-size:12px;color:#66776d;}
+.board-month select,.board-search input,.board-import input {font:inherit;padding:10px 12px;border:1px solid #dbe4dc;border-radius:8px;background:#fff;color:#263a32;}
+.board-card {min-width:0;min-height:348px;padding:28px;border:1px solid #e0e6df;border-radius:18px;background:#fff;box-shadow:0 6px 22px #223a2510;color:#263a32;}
+.board-card header {display:flex;align-items:center;gap:10px;margin-bottom:26px;}
+.board-card h2 {font-size:19px;margin:0;letter-spacing:-.04em;color:inherit;}
+.board-number {font-size:10px;letter-spacing:.07em;color:#8c9a8e;}
+.board-chip {margin-left:auto;white-space:nowrap;border:1px solid #e2e8de;border-radius:20px;padding:5px 9px;font-size:10px;color:#687d6b;font-weight:500;}
+.board-rate-intro {margin:18px 0 14px;padding-bottom:14px;border-bottom:1px solid #e8ece5;}
+.board-rate-preview {display:grid;gap:0;}
+.board-rate-row {padding:10px 0;border-bottom:1px solid #eef1ec;}
+.board-rate-row:last-child {border-bottom:0;}
+.board-rate-row-main {display:flex;justify-content:space-between;align-items:flex-start;gap:12px;font-size:12px;}
+.board-rate-row-main>span {color:#78877b;text-align:right;white-space:nowrap;font-size:11px;}
+.board-inline-meter {height:4px;margin-top:8px;border-radius:8px;background:#edf1ea;overflow:hidden;}
+.board-inline-meter i {display:block;height:100%;border-radius:inherit;background:#829b76;}
+.board-note {color:#7c877d;font-size:12px;line-height:1.8;margin:21px 0 0;word-break:keep-all;}
+.board-details {margin-top:20px;border-top:1px solid #e8ece5;padding-top:15px;}
+.board-details>summary,.board-import>summary {cursor:pointer;font-size:12px;font-weight:650;color:#536c53;}
+.board-details>summary:focus-visible,.board-import>summary:focus-visible {outline:2px solid #577553;outline-offset:5px;}
+.board-search {display:grid;gap:7px;margin-top:18px;color:#68776b;font-size:12px;}
+.board-search input {width:100%;box-sizing:border-box;}
+.board-search-result {margin-top:18px;}
+.board-search-hint {padding:28px 8px;text-align:center;color:#7c877d;font-size:12px;line-height:1.8;}
+.member-search-card {padding-top:4px;}
+.member-search-card .board-rate-row {padding-top:0;}
+.member-event-list {margin-top:20px;border-top:1px solid #e8ece5;}
+.member-event-list h3 {margin:15px 0 7px;font-size:12px;color:#536c53;}
+.member-event-row {display:grid;grid-template-columns:42px 1fr auto;gap:9px;align-items:center;padding:9px 0;border-bottom:1px solid #eef1ec;font-size:11px;}
+.member-event-row time {font-variant-numeric:tabular-nums;color:#849080;}
+.member-event-row span {min-width:0;overflow-wrap:anywhere;color:#536257;}
+.member-event-status {font-size:10px;font-weight:700;white-space:nowrap;}
+.member-event-status.is-present {color:#5b8058;}
+.member-event-status.is-absent {color:#a17a66;}
+.member-event-status.is-upcoming {color:#809170;}
+.board-member-meta {display:block;margin-top:5px;font-size:10px;color:#81917d;}
+.board-winners {background:#f3f5ed;text-align:center;}
+.board-winners header {text-align:left;}
+.board-winner-mark {display:block;color:#a6b28e;font-size:43px;font-weight:400;line-height:1.4;}
+.board-winner-names {font-size:25px;line-height:1.6;font-weight:650;margin-top:12px;word-break:keep-all;}
+.board-winner-copy {font-size:13px;color:#738164;margin:7px 0;}
+.board-podium {display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:8px;align-items:end;min-height:205px;padding:10px 0 0;}
+.podium-place {display:flex;flex-direction:column;align-items:center;min-width:0;}
+.podium-label {font-size:14px;font-weight:750;color:#5d705c;margin-bottom:8px;}
+.podium-names {display:grid;gap:3px;width:100%;padding:0 4px;box-sizing:border-box;min-height:30px;align-content:end;}
+.podium-names strong {font-size:13px;font-weight:650;line-height:1.35;word-break:keep-all;}
+.podium-step {display:flex;align-items:center;justify-content:center;width:100%;margin-top:8px;border-radius:9px 9px 3px 3px;background:#dce6d0;color:#587153;font-size:12px;font-weight:750;}
+.podium-step span {padding:9px 3px;}
+.podium-step small {padding:9px 3px;color:inherit;font-size:10px;font-weight:600;opacity:.8;}
+.podium-first .podium-label {color:#35533c;font-size:17px;}
+.podium-first .podium-step {min-height:76px;background:#b7cfa6;color:#294832;}
+.podium-second .podium-step {min-height:53px;}
+.podium-third .podium-step {min-height:40px;background:#e4eadc;}
+.podium-empty {visibility:hidden;}
+.board-empty {min-height:155px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px;font-size:13px;color:#798675;}
+.board-empty strong {font-size:16px;font-weight:600;color:#63755a;}
+.board-empty p {margin:0;font-size:12px;}
+.board-rule-summary {margin:0;}
+.board-rule-summary>div {display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #eef1ec;font-size:12px;}
+.board-rule-summary dt {color:#73806f;}
+.board-rule-summary dd {margin:0;font-weight:650;text-align:right;}
+.board-rule-full {padding-top:20px;text-align:left;}
+.board-rule-full h3 {font-size:15px;margin:23px 0 12px;}
+.board-rule-full p {font-size:12px;line-height:1.9;word-break:keep-all;color:#647364;}
+.board-event-list {list-style:none;margin:0;padding:0;}
+.board-event-list li {display:flex;gap:15px;align-items:center;padding:11px 0;border-bottom:1px solid #eef1ec;}
+.board-event-list li:last-child {border-bottom:0;}
+.board-event-list time {flex:0 0 37px;text-align:center;background:#f2f5ef;border-radius:8px;padding:6px 0;}
+.board-event-list time strong {display:block;font-size:19px;line-height:1.2;font-weight:600;}
+.board-event-list time span {font-size:9px;color:#7c8a79;}
+.board-event-list li>div {min-width:0;flex:1;}
+.board-event-list li>div strong {font-size:13px;font-weight:600;overflow-wrap:anywhere;}
+.board-event-list li>div span {display:block;font-size:10px;color:#849080;margin-top:5px;}
+.board-event-state {font-size:10px;color:#849080;white-space:nowrap;}
+.board-import {margin-top:26px;padding:20px 24px;background:#fff;border:1px solid #e1e7df;border-radius:12px;color:#657562;font-size:12px;}
+.board-import summary span {font-size:10px;margin-left:8px;font-weight:400;}
+.board-import p {line-height:1.8;margin-top:20px;}
+.board-import form {display:flex;flex-wrap:wrap;align-items:end;gap:14px;margin:18px 0;}
+.board-import label {display:grid;gap:8px;min-width:0;}
+.board-import input {max-width:100%;}
+.board-import table {width:100%;min-width:480px;border-collapse:collapse;margin-top:15px;font-size:12px;}
+.board-import th,.board-import td {padding:10px;text-align:left;border-bottom:1px solid #e4eadf;}
+.board-import .import-scroll {overflow:auto;max-height:300px;}
+.board-import .import-issues {line-height:1.8;color:#976721;}
+#import-result {line-height:1.8;}
+.calendar-poster {position:relative;isolation:isolate;border-radius:12px;}
+.calendar-poster>img {display:block;width:100%;height:auto;border-radius:12px;}
+.calendar-hotspot {position:absolute;left:92.78%;top:var(--day-y);width:5.6%;aspect-ratio:1;border:0;border-radius:50%;padding:0;transform:translate(-50%,-50%);background:transparent;color:#203d29;cursor:pointer;z-index:2;transition:transform .18s,box-shadow .18s,background .18s;font:inherit;}
+.calendar-hotspot span {opacity:0;font-size:clamp(11px,1.8vw,22px);}
+.calendar-hotspot[aria-expanded="true"] {transform:translate(-50%,-50%) scale(1.55);background:#d7e7ac;box-shadow:0 0 0 3px #f2f8d773,0 5px 20px #071e2766;z-index:4;}
+.calendar-hotspot[aria-expanded="true"] span {opacity:1;}
+.calendar-hotspot:focus-visible {outline:3px solid white;outline-offset:3px;}
+.calendar-break {border:1px dashed #e1ebc99c;}
+.calendar-popup[hidden] {display:none;}
+.calendar-popup {position:absolute;right:17%;top:clamp(10px,calc(var(--day-y) - 70px),75%);width:72%;max-width:255px;box-sizing:border-box;padding:20px;border-radius:16px;background:#fcfff1;color:#23412d;box-shadow:0 15px 45px #001b1c66;border:1px solid #e2ebce;z-index:5;animation:calendar-appear .15s ease-out;}
+.calendar-popup::after {content:"";position:absolute;top:64px;right:-8px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:8px solid #fcfff1;}
+.calendar-popup-close {position:absolute;right:7px;top:5px;width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:#708362;font-size:24px;cursor:pointer;}
+.calendar-popup-month {font-size:9px;font-weight:700;letter-spacing:.15em;color:#809363;}
+.calendar-popup-date {display:flex;gap:12px;align-items:center;margin:8px 0 12px;}
+.calendar-popup-date>strong {font-size:46px;font-weight:600;line-height:1;letter-spacing:-.05em;}
+.calendar-popup-date>span {font-size:11px;color:#768c65;}
+.calendar-popup h3 {margin:0 0 8px;font-size:20px;letter-spacing:-.04em;}
+.calendar-popup p {margin:0;font-size:11px;line-height:1.7;color:#768564;word-break:keep-all;}
+.calendar-help {font-size:11px;color:#78866c;line-height:1.7;margin:14px 0 0;}
+.calendar-break-note {font-size:12px;color:#536747;background:#f3f6eb;padding:11px 13px;border-radius:8px;margin:10px 0 0;}
+@keyframes calendar-appear {from {opacity:0;transform:translateX(6px) scale(.96);} to {opacity:1;transform:translateX(0) scale(1);}}
+@media(prefers-reduced-motion:reduce) {.calendar-hotspot{transition:none}.calendar-popup{animation:none}}
+@media(min-width:900px) {.board-rate,.board-winners {min-height:355px;}}
+@media(max-width:760px) {.attendance-board {grid-template-columns:1fr;gap:16px;}.board-card{padding:22px;min-height:0}.board-toolbar{align-items:start}.board-toolbar p{font-size:17px}.board-month{display:grid;gap:6px}.board-month select{min-width:0;width:auto}.board-chip{font-size:9px}.board-import form{display:grid}.board-import label{max-width:100%}.board-rule-summary>div{font-size:11px}.board-rate-row-main>span{font-size:10px}.board-podium{gap:4px;min-height:185px}.podium-names strong{font-size:11px}.podium-label{font-size:12px}.podium-first .podium-label{font-size:15px}.member-event-row{grid-template-columns:39px 1fr auto;font-size:10px}}
