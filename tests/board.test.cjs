@@ -93,6 +93,8 @@ test('월 소개 문구를 숨기고 네 카드 모두 크게 보기 버튼을 �
   const html = board.render(state,'2026-09');
   assert.doesNotMatch(html,/MONTHLY OVERVIEW|함께한 순간들/);
   assert.equal((html.match(/class="board-expand"/g) || []).length,4);
+  assert.equal((html.match(/aria-label="크게 보기"/g) || []).length,4);
+  assert.equal((html.match(/<svg viewBox="0 0 24 24"/g) || []).length,4);
 });
 test('검색 결과에 회원 출석률과 행사별 참여 여부를 표시한다', () => {
   const state = {

@@ -10,7 +10,8 @@
 .board-number {font-size:10px;letter-spacing:.07em;color:#8c9a8e;}
 .board-card-actions {display:flex;align-items:center;gap:8px;margin-left:auto;}
 .board-chip {white-space:nowrap;border:1px solid #e2e8de;border-radius:20px;padding:5px 9px;font-size:10px;color:#687d6b;font-weight:500;}
-.board-expand {min-height:30px;padding:0 11px;border:1px solid #d7e0d4;border-radius:9px;background:#fff;color:#536c53;font-size:11px;font-weight:700;white-space:nowrap;transition:background .16s,border-color .16s,transform .16s;}
+.board-expand {display:grid;place-items:center;width:32px;height:32px;padding:0;border:1px solid #d7e0d4;border-radius:9px;background:#fff;color:#536c53;transition:background .16s,border-color .16s,transform .16s;}
+.board-expand svg {width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;}
 .board-expand:hover {border-color:#aebfa9;background:#f4f7f1;transform:translateY(-1px);}
 .board-expand:focus-visible {outline:2px solid #577553;outline-offset:3px;}
 body.board-modal-open {overflow:hidden;}

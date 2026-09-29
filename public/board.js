@@ -47,8 +47,9 @@ window.AttendanceBoard = (() => {
       expandedCard.removeAttribute("aria-modal");
       const button = expandedCard.querySelector(".board-expand");
       if (button) {
-        button.textContent = "크게 보기";
         button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-label", "크게 보기");
+        button.setAttribute("title", "크게 보기");
       }
       document.querySelector(".board-expand-backdrop")?.remove();
       document.body.classList.remove("board-modal-open");
@@ -63,8 +64,9 @@ window.AttendanceBoard = (() => {
       expandedCard.classList.add("is-expanded");
       expandedCard.setAttribute("role", "dialog");
       expandedCard.setAttribute("aria-modal", "true");
-      button.textContent = "닫기";
       button.setAttribute("aria-expanded", "true");
+      button.setAttribute("aria-label", "닫기");
+      button.setAttribute("title", "닫기");
       const backdrop = document.createElement("button");
       backdrop.type = "button";
       backdrop.className = "board-expand-backdrop";
@@ -226,22 +228,23 @@ window.AttendanceBoard = (() => {
     const pending = !ready ? "기본 회원 정보 입력 대기" : "이달의 출결표 반영 대기";
     const events = [...(state.monthlySchedule || []), ...(state.events || []).filter(e => !(state.monthlySchedule || []).some(s => s.date.slice(0,7) === e.date.slice(0,7)))].filter(e => e.date.slice(0,7) === month).sort((a,b) => a.date.localeCompare(b.date));
     const label = {official:"정기출사 / 공식행사",photo:"번개",external:"외부행사",regular:"정기출사"};
+    const expandButton = `<button type="button" class="board-expand" aria-label="크게 보기" title="크게 보기" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M21 3l-8 8M10 21H3v-7M3 21l8-8"/></svg></button>`;
     return `<div class="board-toolbar"><label class="board-month">기준월<select id="dashboard-month">${months(state).map(m => `<option value="${m}" ${m===month?"selected":""}>${m.replace("-","년 ")}월</option>`).join("")}</select></label></div>
       <div class="attendance-board">
-        <section class="board-card board-rate" aria-labelledby="board-title-rate"><header><span class="board-number">01</span><h2 id="board-title-rate">출석률</h2><div class="board-card-actions"><span class="board-chip">월 기준 50%</span><button type="button" class="board-expand" aria-expanded="false">크게 보기</button></div></header>
+        <section class="board-card board-rate" aria-labelledby="board-title-rate"><header><span class="board-number">01</span><h2 id="board-title-rate">출석률</h2><div class="board-card-actions"><span class="board-chip">월 기준 50%</span>${expandButton}</div></header>
           <p class="board-note board-rate-intro">회원 이름을 검색하면 해당 월 출석률과 행사별 참여 여부를 확인할 수 있습니다.</p>
           <label class="board-search">회원 검색<input id="board-member-search" type="search" placeholder="이름 입력" value="${esc(query)}" autocomplete="off"></label>
           <div id="board-search-result" class="board-search-result">${searchMemberHtml(state, month, query)}</div>
         </section>
-        <section class="board-card board-winners" aria-labelledby="board-title-winners"><header><span class="board-number">02</span><h2 id="board-title-winners">이달의 출석왕 TOP 3</h2><div class="board-card-actions"><span class="board-chip">${month.slice(5)}월</span><button type="button" class="board-expand" aria-expanded="false">크게 보기</button></div></header>
+        <section class="board-card board-winners" aria-labelledby="board-title-winners"><header><span class="board-number">02</span><h2 id="board-title-winners">이달의 출석왕 TOP 3</h2><div class="board-card-actions"><span class="board-chip">${month.slice(5)}월</span>${expandButton}</div></header>
           ${topGroups.length ? `<div class="board-podium">${[topGroups[1], topGroups[0], topGroups[2]].map((group, index) => group ? `<div class="podium-place podium-${group.rank === 1 ? "first" : group.rank === 2 ? "second" : "third"}"><div class="podium-label">${group.rank}위</div><div class="podium-names">${group.members.map(({member}) => `<strong>${esc(member.name)}</strong>`).join("")}</div><div class="podium-step"><span>${pct(group.rate)}</span>${group.units != null ? `<small>${group.units}회</small>` : ""}</div></div>` : `<div class="podium-place podium-empty" aria-hidden="true"></div>`).join("")}</div>` : `<div class="board-empty"><span class="board-winner-mark" aria-hidden="true">✦</span><strong>이번 달의 주인공을 기다려요</strong><p>${pending}</p></div>`}
           <p class="board-note">이달의 출석률 상위 3개 순위입니다.<br>동률 회원은 같은 순위에서 가나다순으로 표시합니다.</p>
         </section>
-        <section class="board-card board-rules" aria-labelledby="board-title-rules"><header><span class="board-number">03</span><h2 id="board-title-rules">출석규정</h2><div class="board-card-actions"><span class="board-chip">회칙 中 出缺</span><button type="button" class="board-expand" aria-expanded="false">크게 보기</button></div></header>
+        <section class="board-card board-rules" aria-labelledby="board-title-rules"><header><span class="board-number">03</span><h2 id="board-title-rules">출석규정</h2><div class="board-card-actions"><span class="board-chip">회칙 中 出缺</span>${expandButton}</div></header>
           <dl class="board-rule-summary"><div><dt>월별·전체 출석률</dt><dd>각 50% 이상</dd></div><div><dt>공식행사 / 인정 번개</dt><dd>1회 / 0.5회</dd></div><div><dt>2개월 / 3개월 미달</dt><dd>경고 누계 1회 / 2회</dd></div></dl>
           <p class="board-note">출석경고는 활동기간 시작 시 초기화됩니다.<br>경고 2회가 부과되면 수료실패에 해당합니다.</p>
         </section>
-        <section class="board-card board-schedule" aria-labelledby="board-title-schedule"><header><span class="board-number">04</span><h2 id="board-title-schedule">이번달 일정</h2><div class="board-card-actions"><span class="board-chip">${events.filter(e=>e.type!=="break").length}건${events.some(e=>e.type==="break")?" · 휴회 1일":""}</span><button type="button" class="board-expand" aria-expanded="false">크게 보기</button></div></header>
+        <section class="board-card board-schedule" aria-labelledby="board-title-schedule"><header><span class="board-number">04</span><h2 id="board-title-schedule">이번달 일정</h2><div class="board-card-actions"><span class="board-chip">${events.filter(e=>e.type!=="break").length}건${events.some(e=>e.type==="break")?" · 휴회 1일":""}</span>${expandButton}</div></header>
           ${month === "2026-10" ? posterCalendar(events,month) : `<ol class="board-event-list">${events.map(e=>`<li><time datetime="${esc(e.date)}"><strong>${Number(e.date.slice(8))}</strong><span>${["일","월","화","수","목","금","토"][new Date(e.date+"T12:00:00+09:00").getUTCDay()]}</span></time><div><strong>${esc(e.name)}</strong><span>${esc(label[e.type]||"행사")}${e.startTime?` · ${esc(e.startTime)}`:""}</span></div><span class="board-event-state">${e.date>today()?"예정":e.date===today()?"오늘":"지난 일정"}</span></li>`).join("") || `<li class="board-empty">등록된 일정이 없습니다.</li>`}</ol><p class="board-note">${(state.monthlySchedule||[]).some(e=>e.date.startsWith(month))?"월별 출결표에 기재된 일정입니다.":"등록된 행사 일정을 표시합니다."}</p>`}
         </section>
       </div>${admin ? importHtml(state) : ""}`;
