@@ -88,6 +88,12 @@ test('출석률 카드는 검색 전용으로 표시하고 인원수 목록을 �
   assert.doesNotMatch(html,/나머지 회원 펼쳐보기/);
   assert.doesNotMatch(html,/출석규정 전문 보기/);
 });
+test('월 소개 문구를 숨기고 네 카드 모두 크게 보기 버튼을 제공한다', () => {
+  const state = {rosterReady:true,members:[{id:'a',name:'가나다',active:true}],events:[],monthlyReports:[report('2026-09',1)]};
+  const html = board.render(state,'2026-09');
+  assert.doesNotMatch(html,/MONTHLY OVERVIEW|함께한 순간들/);
+  assert.equal((html.match(/class="board-expand"/g) || []).length,4);
+});
 test('검색 결과에 회원 출석률과 행사별 참여 여부를 표시한다', () => {
   const state = {
     rosterReady:true,

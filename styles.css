@@ -25,7 +25,7 @@ body { margin: 0; min-width: 320px; background: var(--paper); }
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
 
-.app-shell { min-height: 100vh; display: flex; }
+.app-shell { min-height: 100vh; display: block; }
 .sidebar { width: 250px; flex: 0 0 250px; min-height: 100vh; color: #dbe4f3; background: var(--navy); padding: 30px 18px 22px; display: flex; flex-direction: column; }
 .brand { display: flex; align-items: center; gap: 12px; padding: 0 12px 35px; }
 .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; color: #fff; background: var(--blue); border-radius: 11px; font-weight: 800; font-size: 16px; }
@@ -46,7 +46,7 @@ button { cursor: pointer; }
 .sync-card > span:last-child { display: block; margin-top: 10px; color: #7f91aa; font-size: 10px; }
 .sidebar-foot { color: #6f7e94; text-align: center; font-size: 10px; }
 
-.main-content { flex: 1; max-width: 1500px; margin: 0 auto; padding: 42px 54px 70px; min-width: 0; }
+.main-content { width: 100%; max-width: 1600px; margin: 0 auto; padding: 28px 46px 70px; min-width: 0; }
 .topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 32px; }
 .eyebrow { margin: 0 0 10px; color: var(--blue); font-size: 10px; font-weight: 800; letter-spacing: .14em; }
 h1, h2, h3, p { margin-top: 0; }
@@ -168,24 +168,13 @@ h1 { margin-bottom: 8px; font-size: 31px; line-height: 1.16; letter-spacing: -.0
 .formula-box strong { color: var(--ink); }
 
 @media (max-width: 1050px) {
-  .sidebar { width: 210px; flex-basis: 210px; }
   .main-content { padding: 34px 28px 60px; }
   .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .kpi-grid.kpi-grid-single { grid-template-columns: 1fr; }
   .dashboard-grid, .split-layout { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
-  .app-shell { display: block; }
-  .sidebar { width: 100%; min-height: auto; padding: 16px; }
-  .brand { padding: 0 5px 14px; }
-  .nav-list { display: flex; overflow-x: auto; gap: 5px; padding-bottom: 3px; }
-  .nav-item { flex: 0 0 auto; width: auto; padding: 10px 11px; }
-  .nav-icon { display: none; }
-  .sidebar-bottom { display: none; }
-  .main-content { padding: 27px 16px 45px; }
-  .topbar { display: block; margin-bottom: 23px; }
-  .topbar-actions { padding-top: 18px; }
-  .topbar-actions .button { flex: 1; }
+  .main-content { padding: 18px 16px 45px; }
   h1 { font-size: 27px; }
   .kpi-grid, .rules-grid, .kpi-grid.kpi-grid-single { grid-template-columns: 1fr; }
   .panel, .rule-card { padding: 17px; }

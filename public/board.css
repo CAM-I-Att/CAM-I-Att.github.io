@@ -1,5 +1,5 @@
 .attendance-board { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:stretch; }
-.board-toolbar {display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px;}
+.board-toolbar {display:flex;align-items:center;justify-content:flex-end;gap:20px;margin-bottom:22px;}
 .board-kicker {font-size:10px;font-weight:750;letter-spacing:.16em;color:#728275;}
 .board-toolbar p {margin:6px 0 0;font-size:20px;font-weight:650;letter-spacing:-.04em;color:#263a32;}
 .board-month {display:flex;align-items:center;gap:10px;font-size:12px;color:#66776d;}
@@ -8,7 +8,17 @@
 .board-card header {display:flex;align-items:center;gap:10px;margin-bottom:26px;}
 .board-card h2 {font-size:19px;margin:0;letter-spacing:-.04em;color:inherit;}
 .board-number {font-size:10px;letter-spacing:.07em;color:#8c9a8e;}
-.board-chip {margin-left:auto;white-space:nowrap;border:1px solid #e2e8de;border-radius:20px;padding:5px 9px;font-size:10px;color:#687d6b;font-weight:500;}
+.board-card-actions {display:flex;align-items:center;gap:8px;margin-left:auto;}
+.board-chip {white-space:nowrap;border:1px solid #e2e8de;border-radius:20px;padding:5px 9px;font-size:10px;color:#687d6b;font-weight:500;}
+.board-expand {min-height:30px;padding:0 11px;border:1px solid #d7e0d4;border-radius:9px;background:#fff;color:#536c53;font-size:11px;font-weight:700;white-space:nowrap;transition:background .16s,border-color .16s,transform .16s;}
+.board-expand:hover {border-color:#aebfa9;background:#f4f7f1;transform:translateY(-1px);}
+.board-expand:focus-visible {outline:2px solid #577553;outline-offset:3px;}
+body.board-modal-open {overflow:hidden;}
+.board-expand-backdrop {position:fixed;inset:0;z-index:1000;border:0;background:#14251dcc;cursor:zoom-out;}
+.board-card.is-expanded {position:fixed;top:24px;bottom:24px;left:50%;z-index:1001;width:min(1180px,calc(100vw - 48px));min-height:0;overflow:auto;transform:translateX(-50%);padding:36px;border-color:#cdd9ca;box-shadow:0 28px 90px #0d201666;}
+.board-card.is-expanded header {position:sticky;top:-36px;z-index:8;margin:-36px -36px 26px;padding:28px 36px 18px;background:inherit;border-bottom:1px solid #e1e8de;}
+.board-card.is-expanded h2 {font-size:24px;}
+.board-card.is-expanded .board-expand {background:#263a32;color:#fff;border-color:#263a32;}
 .board-rate-intro {margin:18px 0 14px;padding-bottom:14px;border-bottom:1px solid #e8ece5;}
 .board-rate-preview {display:grid;gap:0;}
 .board-rate-row {padding:10px 0;border-bottom:1px solid #eef1ec;}
@@ -109,4 +119,4 @@
 @keyframes calendar-appear {from {opacity:0;transform:translateX(6px) scale(.96);} to {opacity:1;transform:translateX(0) scale(1);}}
 @media(prefers-reduced-motion:reduce) {.calendar-hotspot{transition:none}.calendar-popup{animation:none}}
 @media(min-width:900px) {.board-rate,.board-winners {min-height:355px;}}
-@media(max-width:760px) {.attendance-board {grid-template-columns:1fr;gap:16px;}.board-card{padding:22px;min-height:0}.board-toolbar{align-items:start}.board-toolbar p{font-size:17px}.board-month{display:grid;gap:6px}.board-month select{min-width:0;width:auto}.board-chip{font-size:9px}.board-import form{display:grid}.board-import label{max-width:100%}.board-rule-summary>div{font-size:11px}.board-rate-row-main>span{font-size:10px}.board-podium{gap:4px;min-height:185px}.podium-names strong{font-size:11px}.podium-label{font-size:12px}.podium-first .podium-label{font-size:15px}.member-event-row{grid-template-columns:39px 1fr auto;font-size:10px}}
+@media(max-width:760px) {.attendance-board {grid-template-columns:1fr;gap:16px;}.board-card{padding:22px;min-height:0}.board-toolbar{align-items:start}.board-month{display:grid;gap:6px}.board-month select{min-width:0;width:auto}.board-card header{align-items:flex-start;flex-wrap:wrap}.board-card-actions{width:100%;justify-content:space-between;margin-left:0}.board-chip{font-size:9px}.board-import form{display:grid}.board-import label{max-width:100%}.board-rule-summary>div{font-size:11px}.board-rate-row-main>span{font-size:10px}.board-podium{gap:4px;min-height:185px}.podium-names strong{font-size:11px}.podium-label{font-size:12px}.podium-first .podium-label{font-size:15px}.member-event-row{grid-template-columns:39px 1fr auto;font-size:10px}.board-card.is-expanded{top:8px;bottom:8px;width:calc(100vw - 16px);padding:22px}.board-card.is-expanded header{top:-22px;margin:-22px -22px 22px;padding:20px 22px 15px}}

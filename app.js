@@ -245,8 +245,10 @@ function render() {
     dashboard: ["대시보드", "출결 현황과 규정 충족 여부를 한눈에 확인하세요."],
     rules: ["출결 규정", "첨부된 회칙 기준을 프로그램 계산에 그대로 반영합니다."],
   };
-  $("#page-title").textContent = titles[currentView][0];
-  $("#page-subtitle").textContent = titles[currentView][1];
+  const pageTitle = $("#page-title");
+  const pageSubtitle = $("#page-subtitle");
+  if (pageTitle) pageTitle.textContent = titles[currentView][0];
+  if (pageSubtitle) pageSubtitle.textContent = titles[currentView][1];
   const views = { dashboard: renderDashboard, rules: renderRules };
   $("#app-view").innerHTML = views[currentView]();
   if (currentView === "members") updateMemberDepartmentField();
