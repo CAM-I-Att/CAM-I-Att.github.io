@@ -70,7 +70,7 @@ def status_label(status: str | None) -> str:
 def seed_state() -> dict[str, Any]:
     return {"version": 2, "sampleData": False, "rosterReady": False,
             "members": [], "events": [], "records": [],
-            "monthlyReports": [], "monthlySchedule": []}
+            "monthlyReports": [], "monthlySchedule": [], "activityWinners": []}
 
 
 def clean_state(raw: dict[str, Any]) -> dict[str, Any]:
@@ -139,12 +139,27 @@ def clean_state(raw: dict[str, Any]) -> dict[str, Any]:
                 "note": str(item.get("note", "")).strip(),
                 "recordedAt": str(item.get("recordedAt", now_iso())),
             })
+    activity_winners = []
+    for item in raw.get("activityWinners", []):
+        if not isinstance(item, dict):
+            continue
+        month = str(item.get("month", "")).strip()
+        photo = str(item.get("photo", "")).strip()
+        if month and photo:
+            rank_text = str(item.get("rank", 1)).strip()
+            activity_winners.append({
+                "month": month,
+                "rank": max(1, int(rank_text)) if rank_text.isdigit() else 1,
+                "name": str(item.get("name", "")).strip(),
+                "photo": photo,
+            })
     return {
         "version": 1,
         "sampleData": bool(raw.get("sampleData", False)),
         "rosterReady": raw.get("rosterReady") is True,
         "monthlyReports": raw.get("monthlyReports", []),
         "monthlySchedule": raw.get("monthlySchedule", []),
+        "activityWinners": activity_winners,
         "members": members,
         "events": events,
         "records": records,
@@ -313,6 +328,7 @@ def public_snapshot(state: dict[str, Any]) -> dict[str, Any]:
         "rosterReady": state.get("rosterReady") is True,
         "monthlyReports": [{**{k:r[k] for k in ("memberId","month","term","activities","units","finalized")}, "regularUnits": r.get("regularUnits", r.get("units", 0)), "lightningCount": r.get("lightningCount", 0), "attendance": r.get("attendance", [])} for r in state.get("monthlyReports", [])] if state.get("rosterReady") else [],
         "monthlySchedule": [{k:e[k] for k in ("date","name","type")} for e in state.get("monthlySchedule", [])],
+        "activityWinners": state.get("activityWinners", []),
         "members": [
             {
                 "id": member["id"],

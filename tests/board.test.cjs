@@ -45,14 +45,12 @@ test('이미 집계된 번개 횟수는 공개 데이터에서 중복 가산하�
   };
   assert.equal(board.stats(state,'a','2026-09').units,3.5);
 });
-test('동률은 같은 순위에 함께 표시하고 회원 명단 대기 중 이름은 노출하지 않는다', () => {
+test('활동왕 사진 입력 전에는 집계중으로 표시한다', () => {
   const state = {rosterReady:true,members:[{id:'a',name:'가나다'},{id:'b',name:'라마바'}],events:[],monthlyReports:[report('2026-09',2),{...report('2026-09',2),memberId:'b'}]};
   const html = board.render(state,'2026-09');
-  assert.match(html,/podium-first/);
-  assert.match(html,/<div class="podium-names"><strong>가나다<\/strong><strong>라마바<\/strong><\/div>/);
-  state.rosterReady=false;
-  const waitingHtml = board.render(state,'2026-09');
-  assert.doesNotMatch(waitingHtml,/<strong>가나다<\/strong>|<strong>라마바<\/strong>/);
+  assert.match(html,/winner-counting/);
+  assert.match(html,/집계중/);
+  assert.doesNotMatch(html,/<strong>가나다<\/strong>|<strong>라마바<\/strong>/);
 });
 test('회원명과 일정명 HTML 이스케이프', () => {
   const html = board.render({members:[],events:[],monthlySchedule:[{date:'2026-09-05',type:'photo',name:'<script>alert(1)</script>'}]},'2026-09');
@@ -114,11 +112,18 @@ test('검색 결과에 회원 출석률과 행사별 참여 여부를 표시한�
   assert.match(html,/참여/);
   assert.match(board.searchMemberHtml(state,'2026-09',''),/이름을 검색하면/);
 });
-test('출석왕 시상대는 2위, 1위, 3위 순서로 배치한다', () => {
-  const state = {rosterReady:true,members:[{id:'a',name:'가나다'},{id:'b',name:'라마바'},{id:'c',name:'다라마'}],events:[],monthlyReports:[
-    {...report('2026-09',2),memberId:'a'}, {...report('2026-09',3),memberId:'b'}, {...report('2026-09',1),memberId:'c'},
+test('활동왕 사진은 두 칸 갤러리 형태로 표시한다', () => {
+  const state = {rosterReady:true,members:[],events:[],monthlyReports:[],activityWinners:[
+    {month:'2026-09',rank:2,name:'라마바',photo:'assets/two.jpg'},
+    {month:'2026-09',rank:1,name:'가나다',photo:'assets/one.jpg'},
   ]};
   const html = board.render(state,'2026-09');
-  const podium = html.match(/<div class="board-podium">([\s\S]*?)\n\s*<p class="board-note">/)[1];
-  assert.deepEqual([...podium.matchAll(/class="podium-place podium-(?:second|first|third)"[\s\S]*?<div class="podium-label">(\d위)/g)].map(match => match[1]), ['2위','1위','3위']);
+  assert.match(html,/class="winner-photo-grid"/);
+  assert.equal((html.match(/<figure>/g) || []).length,2);
+  assert.ok(html.indexOf('가나다') < html.indexOf('라마바'));
+});
+test('9월 일정은 한 줄에 두 개씩 표시한다', () => {
+  const html = board.render({members:[],events:[],monthlySchedule:[{date:'2026-09-05',type:'official',name:'OT'}]},'2026-09');
+  assert.match(html,/attendance-board-balanced/);
+  assert.match(html,/board-event-list-two/);
 });

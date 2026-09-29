@@ -116,6 +116,11 @@ class MonthlyImportTests(unittest.TestCase):
         self.assertEqual(report["attendance"][0]["status"], "참여")
         self.assertEqual(report["lightningCount"], 0)
 
+    def test_activity_winners_survive_save_and_public_snapshot(self):
+        self.state["activityWinners"] = [{"month":"2026-09", "rank":1, "name":"테스트", "photo":"assets/winner.jpg"}]
+        cleaned = server.clean_state(self.state)
+        self.assertEqual(server.public_snapshot(cleaned)["activityWinners"], self.state["activityWinners"])
+
     def test_leave_member_is_matched_but_not_counted(self):
         self.state["members"][0].update(active=False, membershipStatus="휴학", rosterIncluded=True)
         self.state["members"].append({"id":"old", "name":"이전 회원", "active":False,"rosterIncluded":False})
