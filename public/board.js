@@ -4,6 +4,12 @@ window.AttendanceBoard = (() => {
   const pct = value => value == null ? "—" : `${Math.round(value * 1000) / 10}%`;
   const today = () => new Intl.DateTimeFormat("sv-SE", {timeZone:"Asia/Seoul"}).format(new Date());
   const assetBase = typeof document !== "undefined" ? new URL(".", document.currentScript.src).href : "/public/";
+  const bundledActivityWinners = {
+    "2026-09": [
+      {name:"김태건", photo:`${assetBase}assets/activity-winners/2026-09/kim-taegeon.png`},
+      {name:"나혜영", photo:`${assetBase}assets/activity-winners/2026-09/na-hyeyoung.png`},
+    ],
+  };
   const posterDays = {3:44.63, 10:49.93, 17:55.48, 24:61.04, 31:66.67};
   function posterCalendar(events, month) {
     const marked = events.filter(e => e.type !== "break" && posterDays[Number(e.date.slice(8))] != null);
@@ -218,11 +224,11 @@ window.AttendanceBoard = (() => {
     }));
   }
   function activityWinnerHtml(state, month) {
-    const winners = (state.activityWinners || [])
-      .filter(winner => winner.month === month && winner.photo)
+    const configured = (state.activityWinners || []).filter(winner => winner.month === month && winner.photo);
+    const winners = (configured.length ? configured : bundledActivityWinners[month] || [])
       .sort((a,b) => (Number(a.rank) || 99) - (Number(b.rank) || 99) || String(a.name || "").localeCompare(String(b.name || ""), "ko"));
     if (!winners.length) return `<div class="winner-photo-stage"><div class="winner-photo-grid winner-photo-grid-pending" aria-hidden="true"><span></span><span></span></div><div class="winner-counting"><strong>집계중</strong><span>사진 등록 후 공개됩니다.</span></div></div>`;
-    return `<div class="winner-photo-grid">${winners.map((winner,index) => `<figure><img src="${esc(winner.photo)}" alt="${esc(winner.name || `${index + 1}위 활동왕`)}"><figcaption><span>${Number(winner.rank) || index + 1}위</span><strong>${esc(winner.name || "")}</strong></figcaption></figure>`).join("")}</div>`;
+    return `<div class="winner-photo-grid">${winners.map((winner,index) => `<figure><img src="${esc(winner.photo)}" alt="${esc(winner.name || `${index + 1}번째 활동왕`)}"><figcaption>${winner.rank ? `<span>${Number(winner.rank)}위</span>` : ""}<strong>${esc(winner.name || "")}</strong></figcaption></figure>`).join("")}</div>`;
   }
   function render(state, month, query = "", admin = false) {
     const events = [...(state.monthlySchedule || []), ...(state.events || []).filter(e => !(state.monthlySchedule || []).some(s => s.date.slice(0,7) === e.date.slice(0,7)))].filter(e => e.date.slice(0,7) === month).sort((a,b) => a.date.localeCompare(b.date));
@@ -235,7 +241,7 @@ window.AttendanceBoard = (() => {
           <label class="board-search">회원 검색<input id="board-member-search" type="search" placeholder="이름 입력" value="${esc(query)}" autocomplete="off"></label>
           <div id="board-search-result" class="board-search-result">${searchMemberHtml(state, month, query)}</div>
         </section>
-        <section class="board-card board-winners" aria-labelledby="board-title-winners"><header><span class="board-number">02</span><h2 id="board-title-winners">이달의 출석왕 TOP 3</h2><div class="board-card-actions"><span class="board-chip">${month.slice(5)}월</span>${expandButton}</div></header>
+        <section class="board-card board-winners" aria-labelledby="board-title-winners"><header><span class="board-number">02</span><h2 id="board-title-winners">이달의 활동왕</h2><div class="board-card-actions"><span class="board-chip">${month.slice(5)}월</span>${expandButton}</div></header>
           ${activityWinnerHtml(state, month)}
         </section>
         <section class="board-card board-rules" aria-labelledby="board-title-rules"><header><span class="board-number">03</span><h2 id="board-title-rules">출석규정</h2><div class="board-card-actions"><span class="board-chip">회칙 中 出缺</span>${expandButton}</div></header>

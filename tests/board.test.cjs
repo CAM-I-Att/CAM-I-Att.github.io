@@ -47,7 +47,7 @@ test('이미 집계된 번개 횟수는 공개 데이터에서 중복 가산하�
 });
 test('활동왕 사진 입력 전에는 집계중으로 표시한다', () => {
   const state = {rosterReady:true,members:[{id:'a',name:'가나다'},{id:'b',name:'라마바'}],events:[],monthlyReports:[report('2026-09',2),{...report('2026-09',2),memberId:'b'}]};
-  const html = board.render(state,'2026-09');
+  const html = board.render(state,'2026-08');
   assert.match(html,/winner-counting/);
   assert.match(html,/집계중/);
   assert.doesNotMatch(html,/<strong>가나다<\/strong>|<strong>라마바<\/strong>/);
@@ -72,7 +72,7 @@ test('평균 출석률 문구는 렌더링하지 않는다', () => {
   const state = {rosterReady:true,members:[{id:'a',name:'가나다',active:true}],events:[],monthlyReports:[report('2026-09',1)]};
   const html = board.render(state,'2026-09');
   assert.doesNotMatch(html,/평균/);
-  assert.match(html,/이달의 출석왕 TOP 3/);
+  assert.match(html,/이달의 활동왕/);
 });
 test('출석률 카드는 검색 전용으로 표시하고 인원수 목록을 노출하지 않는다', () => {
   const state = {rosterReady:true,members:[
@@ -121,6 +121,15 @@ test('활동왕 사진은 두 칸 갤러리 형태로 표시한다', () => {
   assert.match(html,/class="winner-photo-grid"/);
   assert.equal((html.match(/<figure>/g) || []).length,2);
   assert.ok(html.indexOf('가나다') < html.indexOf('라마바'));
+});
+test('9월 활동왕 인증서 두 장을 기본 사진으로 표시한다', () => {
+  const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
+  assert.match(html,/kim-taegeon\.png/);
+  assert.match(html,/na-hyeyoung\.png/);
+  assert.match(html,/김태건/);
+  assert.match(html,/나혜영/);
+  assert.ok(fs.existsSync('public/assets/activity-winners/2026-09/kim-taegeon.png'));
+  assert.ok(fs.existsSync('public/assets/activity-winners/2026-09/na-hyeyoung.png'));
 });
 test('9월 일정은 한 줄에 두 개씩 표시한다', () => {
   const html = board.render({members:[],events:[],monthlySchedule:[{date:'2026-09-05',type:'official',name:'OT'}]},'2026-09');
