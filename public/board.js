@@ -130,6 +130,12 @@ window.AttendanceBoard = (() => {
         closeExpandedCard();
       }
     });
+    document.addEventListener("wheel", event => {
+      if (!expandedCard || event.ctrlKey || !event.target.closest(".board-card.is-expanded")) return;
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? expandedCard.clientHeight : 1;
+      expandedCard.scrollTop += event.deltaY * unit;
+      event.preventDefault();
+    }, {passive:false});
   }
   const rules = [
     ["출결 용어", [
