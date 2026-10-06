@@ -136,3 +136,8 @@ test('9월 일정은 한 줄에 두 개씩 표시한다', () => {
   assert.match(html,/attendance-board-balanced/);
   assert.match(html,/board-event-list-two/);
 });
+test('출석규정 한자 배지를 숨기고 사진 번개로 표시한다', () => {
+  const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
+  assert.doesNotMatch(html,/회칙 中 出缺|인정 번개/);
+  assert.match(html,/공식행사 \/ 사진 번개/);
+});

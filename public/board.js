@@ -149,7 +149,7 @@ window.AttendanceBoard = (() => {
     ]]
   ];
   function rulesHtml() {
-    return `<div class="board-rule-full"><p class="board-kicker">회칙 中 出缺</p>${rules.map(([title, lines]) => `<h3>${title}</h3>${lines.map(line => `<p>${esc(line)}</p>`).join("")}`).join("")}</div>`;
+    return `<div class="board-rule-full">${rules.map(([title, lines]) => `<h3>${title}</h3>${lines.map(line => `<p>${esc(line)}</p>`).join("")}`).join("")}</div>`;
   }
   function months(state) {
     return [...new Set([today().slice(0,7), ...(state.events || []).map(e => e.date.slice(0,7)), ...(state.monthlySchedule || []).map(e => e.date.slice(0,7)), ...(state.monthlyReports || []).map(r => r.month)])].sort().reverse();
@@ -244,8 +244,8 @@ window.AttendanceBoard = (() => {
         <section class="board-card board-winners" aria-labelledby="board-title-winners"><header><span class="board-number">02</span><h2 id="board-title-winners">이달의 활동왕</h2><div class="board-card-actions"><span class="board-chip">${month.slice(5)}월</span>${expandButton}</div></header>
           ${activityWinnerHtml(state, month)}
         </section>
-        <section class="board-card board-rules" aria-labelledby="board-title-rules"><header><span class="board-number">03</span><h2 id="board-title-rules">출석규정</h2><div class="board-card-actions"><span class="board-chip">회칙 中 出缺</span>${expandButton}</div></header>
-          <dl class="board-rule-summary"><div><dt>월별·전체 출석률</dt><dd>각 50% 이상</dd></div><div><dt>공식행사 / 인정 번개</dt><dd>1회 / 0.5회</dd></div><div><dt>2개월 / 3개월 미달</dt><dd>경고 누계 1회 / 2회</dd></div></dl>
+        <section class="board-card board-rules" aria-labelledby="board-title-rules"><header><span class="board-number">03</span><h2 id="board-title-rules">출석규정</h2><div class="board-card-actions">${expandButton}</div></header>
+          <dl class="board-rule-summary"><div><dt>월별·전체 출석률</dt><dd>각 50% 이상</dd></div><div><dt>공식행사 / 사진 번개</dt><dd>1회 / 0.5회</dd></div><div><dt>2개월 / 3개월 미달</dt><dd>경고 누계 1회 / 2회</dd></div></dl>
           <p class="board-note">출석경고는 활동기간 시작 시 초기화됩니다.<br>경고 2회가 부과되면 수료실패에 해당합니다.</p>
         </section>
         <section class="board-card board-schedule" aria-labelledby="board-title-schedule"><header><span class="board-number">04</span><h2 id="board-title-schedule">이번달 일정</h2><div class="board-card-actions"><span class="board-chip">${events.filter(e=>e.type!=="break").length}건${events.some(e=>e.type==="break")?" · 휴회 1일":""}</span>${expandButton}</div></header>

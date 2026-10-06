@@ -294,7 +294,7 @@ function renderEvents() {
 }
 
 function renderRules() {
-  return `<section class="board-card board-rules"><header><span class="board-number">03</span><h2>출석규정</h2><span class="board-chip">요약</span></header><dl class="board-rule-summary"><div><dt>월별·전체 출석률</dt><dd>각 50% 이상</dd></div><div><dt>공식행사 / 인정 번개</dt><dd>1회 / 0.5회</dd></div><div><dt>2개월 / 3개월 미달</dt><dd>경고 누계 1회 / 2회</dd></div></dl><p class="board-note">출석경고는 활동기간 시작 시 초기화됩니다.<br>경고 2회가 부과되면 수료실패에 해당합니다.</p></section>`;
+  return `<section class="board-card board-rules"><header><span class="board-number">03</span><h2>출석규정</h2><span class="board-chip">요약</span></header><dl class="board-rule-summary"><div><dt>월별·전체 출석률</dt><dd>각 50% 이상</dd></div><div><dt>공식행사 / 사진 번개</dt><dd>1회 / 0.5회</dd></div><div><dt>2개월 / 3개월 미달</dt><dd>경고 누계 1회 / 2회</dd></div></dl><p class="board-note">출석경고는 활동기간 시작 시 초기화됩니다.<br>경고 2회가 부과되면 수료실패에 해당합니다.</p></section>`;
 }
 
 function saveAttendance() {
