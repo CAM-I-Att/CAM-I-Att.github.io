@@ -156,6 +156,7 @@ test('상단에는 CAM-I 로고와 홈·피드 탭만 표시한다', () => {
   assert.match(html,/data-portal-tab="home"/);
   assert.match(html,/data-portal-tab="feed"/);
   assert.doesNotMatch(html,/관심/);
+  assert.doesNotMatch(html,/CAM-I ACTIVITY STANDARD/);
 });
 
 test('출석률 상세는 선택 월과 전체 및 월별 기록을 표시한다', () => {

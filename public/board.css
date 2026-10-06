@@ -146,10 +146,9 @@ body.board-modal-open {overflow:hidden;}
 .portal-page[hidden] {display:none;}
 .club-rules-strip {padding:26px 28px 24px;border:1px solid var(--portal-line);border-radius:20px;background:#fff;box-shadow:0 7px 24px rgba(0,27,55,.035);}
 .club-rules-strip>header {display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px;}
-.club-rules-strip>header>div {display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:8px;}
+.club-rules-strip>header>div {display:flex;align-items:center;gap:10px;}
 .club-rules-strip .status-dot {width:8px;height:8px;border-radius:50%;background:#20bf6b;box-shadow:0 0 0 5px #20bf6b14;}
-.club-rules-strip header p {grid-column:2;margin:0 0 4px;color:var(--portal-muted);font-size:10px;font-weight:800;letter-spacing:.09em;}
-.club-rules-strip h1 {grid-column:1/-1;margin:0;font-size:25px;letter-spacing:-.055em;}
+.club-rules-strip h1 {margin:0;font-size:25px;letter-spacing:-.055em;}
 .rule-period {padding:7px 10px;border-radius:9px;background:#f2f4f6;color:#6b7684;font-size:10px;font-weight:700;}
 .club-rules-strip dl {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;}
 .club-rules-strip dl>div {padding:3px 24px;border-left:1px solid #edf0f2;}
