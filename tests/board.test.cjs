@@ -161,10 +161,14 @@ test('상단에는 CAM-I 로고와 홈·피드 탭만 표시한다', () => {
 });
 
 test('기준월 선택기는 출석률과 일정 카드 안에 각각 표시한다', () => {
-  const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
+  const html = board.render({members:[],events:[],monthlyReports:[report('2026-09',1)]},'2026-09','',false,'2026-10');
   assert.equal((html.match(/class="dashboard-month"/g) || []).length,2);
   assert.match(html,/aria-label="출석률 기준월"/);
   assert.match(html,/aria-label="일정 기준월"/);
+  const attendanceOptions = html.match(/data-month-scope="attendance"[^>]*>([\s\S]*?)<\/select>/)?.[1] || "";
+  const scheduleOptions = html.match(/data-month-scope="schedule"[^>]*>([\s\S]*?)<\/select>/)?.[1] || "";
+  assert.match(attendanceOptions,/<option value="2026-09" selected>/);
+  assert.match(scheduleOptions,/<option value="2026-10" selected>/);
   const header = html.match(/<header class="portal-header">([\s\S]*?)<\/header>/)?.[1] || "";
   assert.doesNotMatch(header,/dashboard-month|기준월/);
 });
@@ -194,6 +198,6 @@ test('피드는 큰 활동왕 영역 뒤를 빈 공간으로 남긴다', () => {
 });
 test('출석규정 한자 배지를 숨기고 사진 번개로 표시한다', () => {
   const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
-  assert.doesNotMatch(html,/회칙 中 出缺|인정 번개/);
+  assert.doesNotMatch(html,/회칙 中 出缺|인정 번개|status-dot/);
   assert.match(html,/공식행사 \/ 사진 번개/);
 });

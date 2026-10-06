@@ -1,18 +1,21 @@
 let state = null;
 let selectedMonth = "";
+let selectedScheduleMonth = "";
 let selectedMember = "all";
 let memberSearch = "";
 
 selectedMonth = new Intl.DateTimeFormat("sv-SE", {timeZone:"Asia/Seoul"}).format(new Date()).slice(0,7);
 const requestedMonth = new URLSearchParams(location.search).get("month");
 if (/^\d{4}-(0[1-9]|1[0-2])$/.test(requestedMonth || "")) selectedMonth = requestedMonth;
+selectedScheduleMonth = selectedMonth;
 function render() {
-  document.querySelector("#public-board").innerHTML = AttendanceBoard.render(state, selectedMonth, memberSearch);
+  document.querySelector("#public-board").innerHTML = AttendanceBoard.render(state, selectedMonth, memberSearch, false, selectedScheduleMonth);
 }
 document.addEventListener("change", event => {
   if (event.target.matches(".dashboard-month")) {
     document.querySelector('.board-card.is-expanded .board-expand')?.click();
-    selectedMonth = event.target.value;
+    if (event.target.dataset.monthScope === "schedule") selectedScheduleMonth = event.target.value;
+    else selectedMonth = event.target.value;
     render();
   }
 });
@@ -30,5 +33,5 @@ fetch("./data/public-state.json", {cache:"no-store"})
     render();
   }).catch(error => {
     document.querySelector("#updated-at").textContent = error.message;
-    document.querySelector("#public-board").innerHTML = `<p role="alert">${AttendanceBoard.esc(error.message)} 새로고침 후 다시 확인해 주세요.</p>${AttendanceBoard.render({members:[],events:[],records:[]},selectedMonth)}`;
+    document.querySelector("#public-board").innerHTML = `<p role="alert">${AttendanceBoard.esc(error.message)} 새로고침 후 다시 확인해 주세요.</p>${AttendanceBoard.render({members:[],events:[],records:[]},selectedMonth,"",false,selectedScheduleMonth)}`;
   });

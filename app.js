@@ -22,8 +22,12 @@ let state = null;
 let sync = null;
 let currentView = "dashboard";
 let selectedMonth = new Date().toISOString().slice(0, 7);
+let selectedScheduleMonth = selectedMonth;
 const requestedMonth = new URLSearchParams(location.search).get("month");
-if (/^\d{4}-(0[1-9]|1[0-2])$/.test(requestedMonth || "")) selectedMonth = requestedMonth;
+if (/^\d{4}-(0[1-9]|1[0-2])$/.test(requestedMonth || "")) {
+  selectedMonth = requestedMonth;
+  selectedScheduleMonth = requestedMonth;
+}
 let selectedEventId = "";
 let noticeTimer = null;
 let readOnlyMode = false;
@@ -264,7 +268,7 @@ function render() {
 }
 
 function renderDashboard() {
-  return AttendanceBoard.render(state, selectedMonth, memberSearch, !readOnlyMode);
+  return AttendanceBoard.render(state, selectedMonth, memberSearch, !readOnlyMode, selectedScheduleMonth);
 }
 
 function monthOptions() { return allMonths().map((month) => `<option value="${month}" ${month === selectedMonth ? "selected" : ""}>${month}</option>`).join(""); }
@@ -394,7 +398,8 @@ function updateAttendanceRow(row) {
 document.addEventListener("change", (event) => {
   if (event.target.matches(".dashboard-month")) {
     document.querySelector('.board-card.is-expanded .board-expand')?.click();
-    selectedMonth = event.target.value;
+    if (event.target.dataset.monthScope === "schedule") selectedScheduleMonth = event.target.value;
+    else selectedMonth = event.target.value;
     render();
   }
   if (event.target.id === "event-select") { selectedEventId = event.target.value; render(); }
