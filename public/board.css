@@ -149,7 +149,6 @@ body.board-modal-open {overflow:hidden;}
 .club-rules-strip>header>div {display:flex;align-items:center;gap:10px;}
 .club-rules-strip .status-dot {width:8px;height:8px;border-radius:50%;background:#20bf6b;box-shadow:0 0 0 5px #20bf6b14;}
 .club-rules-strip h1 {margin:0;font-size:25px;letter-spacing:-.055em;}
-.rule-period {padding:7px 10px;border-radius:9px;background:#f2f4f6;color:#6b7684;font-size:10px;font-weight:700;}
 .club-rules-strip dl {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;}
 .club-rules-strip dl>div {padding:3px 24px;border-left:1px solid #edf0f2;}
 .club-rules-strip dl>div:first-child {padding-left:0;border-left:0;}
@@ -161,7 +160,7 @@ body.board-modal-open {overflow:hidden;}
 .portal-panel.board-card>header {margin-bottom:22px;}
 .portal-panel h2 {font-size:21px;color:#191f28;}
 .panel-eyebrow {display:block;margin-bottom:5px;color:var(--portal-blue);font-size:9px;font-weight:800;letter-spacing:.12em;}
-.portal-panel .board-chip {border-color:#e8ebed;color:#6b7684;background:#f8f9fa;}
+.portal-panel .board-card-actions {width:auto;justify-content:flex-end;margin-left:auto;}
 .portal-panel .board-expand {border-color:#dde2e6;color:#4e5968;}
 .portal-panel:not(.is-expanded) .detail-only {display:none;}
 .portal-panel.is-expanded .summary-only {display:none;}

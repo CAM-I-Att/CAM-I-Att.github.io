@@ -94,6 +94,7 @@ test('홈은 출석률과 일정에만 자세히 보기 버튼을 제공한다',
   assert.equal((html.match(/aria-label="크게 보기"/g) || []).length,2);
   assert.equal((html.match(/<svg viewBox="0 0 24 24"/g) || []).length,2);
   assert.match(html,/class="club-rules-strip"/);
+  assert.doesNotMatch(html,/활동기간 기준|기준 50%|class="board-chip"/);
 });
 test('검색 결과에 회원 출석률과 행사별 참여 여부를 표시한다', () => {
   const state = {
