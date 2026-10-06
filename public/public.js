@@ -10,7 +10,11 @@ function render() {
   document.querySelector("#public-board").innerHTML = AttendanceBoard.render(state, selectedMonth, memberSearch);
 }
 document.addEventListener("change", event => {
-  if (event.target.id === "dashboard-month") { selectedMonth = event.target.value; render(); }
+  if (event.target.matches(".dashboard-month")) {
+    document.querySelector('.board-card.is-expanded .board-expand')?.click();
+    selectedMonth = event.target.value;
+    render();
+  }
 });
 document.addEventListener("input", event => {
   if (event.target.id !== "board-member-search") return;

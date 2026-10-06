@@ -392,7 +392,11 @@ function updateAttendanceRow(row) {
 }
 
 document.addEventListener("change", (event) => {
-  if (event.target.id === "dashboard-month") { selectedMonth = event.target.value; render(); }
+  if (event.target.matches(".dashboard-month")) {
+    document.querySelector('.board-card.is-expanded .board-expand')?.click();
+    selectedMonth = event.target.value;
+    render();
+  }
   if (event.target.id === "event-select") { selectedEventId = event.target.value; render(); }
   if (event.target.id === "member-note") updateMemberDepartmentField();
   if (event.target.matches(".status-select, .attendance-time-input")) updateAttendanceRow(event.target.closest(".attendance-row"));

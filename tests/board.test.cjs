@@ -160,6 +160,15 @@ test('상단에는 CAM-I 로고와 홈·피드 탭만 표시한다', () => {
   assert.doesNotMatch(html,/CAM-I ACTIVITY STANDARD/);
 });
 
+test('기준월 선택기는 출석률과 일정 카드 안에 각각 표시한다', () => {
+  const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
+  assert.equal((html.match(/class="dashboard-month"/g) || []).length,2);
+  assert.match(html,/aria-label="출석률 기준월"/);
+  assert.match(html,/aria-label="일정 기준월"/);
+  const header = html.match(/<header class="portal-header">([\s\S]*?)<\/header>/)?.[1] || "";
+  assert.doesNotMatch(header,/dashboard-month|기준월/);
+});
+
 test('출석률 상세는 선택 월과 전체 및 월별 기록을 표시한다', () => {
   const state = {
     rosterReady:true,

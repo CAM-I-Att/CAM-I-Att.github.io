@@ -140,8 +140,6 @@ body.board-modal-open {overflow:hidden;}
 .portal-tabs button::after {content:"";position:absolute;left:15px;right:15px;bottom:0;height:3px;border-radius:99px;background:transparent;}
 .portal-tabs button.is-active {color:var(--portal-ink);}
 .portal-tabs button.is-active::after {background:var(--portal-blue);}
-.portal-month {display:flex;align-items:center;gap:9px;margin-left:auto;color:var(--portal-muted);font-size:11px;font-weight:700;white-space:nowrap;}
-.portal-month select {min-width:142px;padding:10px 34px 10px 12px;border:1px solid var(--portal-line);border-radius:11px;background:#fff;color:#333d4b;font-size:12px;}
 .portal-page {padding:24px 0 0;}
 .portal-page[hidden] {display:none;}
 .club-rules-strip {padding:26px 28px 24px;border:1px solid var(--portal-line);border-radius:20px;background:#fff;box-shadow:0 7px 24px rgba(0,27,55,.035);}
@@ -161,6 +159,8 @@ body.board-modal-open {overflow:hidden;}
 .portal-panel h2 {font-size:21px;color:#191f28;}
 .panel-eyebrow {display:block;margin-bottom:5px;color:var(--portal-blue);font-size:9px;font-weight:800;letter-spacing:.12em;}
 .portal-panel .board-card-actions {width:auto;justify-content:flex-end;margin-left:auto;}
+.panel-month {display:flex;align-items:center;gap:7px;color:#8b95a1;font-size:10px;font-weight:700;white-space:nowrap;}
+.panel-month select {min-width:116px;padding:8px 28px 8px 10px;border:1px solid #dde2e6;border-radius:9px;background:#fff;color:#4e5968;font:inherit;}
 .portal-panel .board-expand {border-color:#dde2e6;color:#4e5968;}
 .portal-panel:not(.is-expanded) .detail-only {display:none;}
 .portal-panel.is-expanded .summary-only {display:none;}
@@ -213,4 +213,4 @@ body.board-modal-open {overflow:hidden;}
 .feed-open-space {min-height:300px;}
 .cam-portal>.board-import {margin-top:20px;}
 @media(max-width:900px) {.portal-dashboard{grid-template-columns:1fr}.portal-panel.board-card{height:auto;min-height:390px}.club-rules-strip dl{grid-template-columns:1fr}.club-rules-strip dl>div{padding:13px 0;border-left:0;border-top:1px solid #f0f2f4}.club-rules-strip dl>div:first-child{border-top:0}.feed-awards{padding:28px}}
-@media(max-width:640px) {.portal-header{gap:10px;flex-wrap:wrap}.portal-brand img{width:40px;height:40px}.portal-brand strong{display:none}.portal-tabs{height:54px}.portal-tabs button{padding:0 12px}.portal-month{width:100%;justify-content:space-between;padding-top:10px;border-top:1px solid #eef0f2}.portal-month select{flex:1}.portal-page{padding-top:16px}.club-rules-strip,.portal-panel.board-card,.feed-awards{padding:20px;border-radius:16px}.club-rules-strip>header{align-items:flex-start}.club-rules-strip h1{font-size:22px}.club-rules-strip dd{font-size:15px}.attendance-overview>strong{font-size:42px}.portal-panel.board-card{min-height:0}.member-result-head{display:block!important}.member-result-head>div:last-child{margin-top:14px}.feed-winner-gallery .winner-photo-grid{grid-template-columns:1fr;max-width:340px}.board-card.is-expanded .feed-winner-gallery .winner-photo-grid{max-width:340px}}
+@media(max-width:640px) {.portal-header{gap:10px}.portal-brand img{width:40px;height:40px}.portal-brand strong{display:none}.portal-tabs{height:54px}.portal-tabs button{padding:0 12px}.portal-page{padding-top:16px}.club-rules-strip,.portal-panel.board-card,.feed-awards{padding:20px;border-radius:16px}.club-rules-strip>header{align-items:flex-start}.club-rules-strip h1{font-size:22px}.club-rules-strip dd{font-size:15px}.portal-panel.board-card>header{flex-wrap:wrap}.portal-panel .board-card-actions{width:100%;justify-content:space-between;margin-left:0}.panel-month{flex:1}.panel-month select{flex:1;min-width:0}.attendance-overview>strong{font-size:42px}.portal-panel.board-card{min-height:0}.member-result-head{display:block!important}.member-result-head>div:last-child{margin-top:14px}.feed-winner-gallery .winner-photo-grid{grid-template-columns:1fr;max-width:340px}.board-card.is-expanded .feed-winner-gallery .winner-photo-grid{max-width:340px}}
