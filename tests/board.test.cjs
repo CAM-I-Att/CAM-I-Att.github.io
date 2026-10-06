@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const context = {window:{}, Intl, Date};
 vm.runInNewContext(fs.readFileSync('public/board.js','utf8'),context);
 const board = context.window.AttendanceBoard;
+const boardCss = fs.readFileSync('public/board.css','utf8');
 const report = (month, units, term='21기') => ({memberId:'a',month,units,activities:2,term,finalized:true});
 test('월 50% 이상이면 전체율 미달을 월별 경고에 중복 계산하지 않는다', () => {
   const stats = board.stats({monthlyReports:[report('2026-08',0),report('2026-09',1)]},'a','2026-09');
@@ -95,6 +96,10 @@ test('홈은 출석률과 일정에만 자세히 보기 버튼을 제공한다',
   assert.equal((html.match(/<svg viewBox="0 0 24 24"/g) || []).length,2);
   assert.match(html,/class="club-rules-strip"/);
   assert.doesNotMatch(html,/활동기간 기준|기준 50%|class="board-chip"/);
+});
+
+test('확대 패널은 내부 세로 스크롤을 허용한다', () => {
+  assert.match(boardCss,/\.portal-panel\.board-card\.is-expanded\s*\{[^}]*overflow-y:auto/);
 });
 test('검색 결과에 회원 출석률과 행사별 참여 여부를 표시한다', () => {
   const state = {

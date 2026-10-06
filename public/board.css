@@ -183,7 +183,7 @@ body.board-modal-open {overflow:hidden;}
 .detail-heading {margin-bottom:22px;}
 .detail-heading h3 {margin:0 0 6px;font-size:22px;letter-spacing:-.045em;}
 .detail-heading p {margin:0;color:#8b95a1;font-size:12px;line-height:1.65;}
-.portal-panel.is-expanded {height:auto;}
+.portal-panel.board-card.is-expanded {height:auto;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
 .portal-panel.is-expanded .board-search {max-width:520px;}
 .member-result-head {position:static!important;display:flex!important;justify-content:space-between;gap:18px!important;margin:20px 0 0!important;padding:18px 0!important;border-top:1px solid #eef0f2;border-bottom:1px solid #eef0f2!important;background:transparent!important;}
 .member-result-head>div:first-child strong {display:block;font-size:18px;}
