@@ -1,5 +1,6 @@
 /* Shared by the local manager and the static public page. */
 window.AttendanceBoard = (() => {
+  let activeTab = "home";
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const pct = value => value == null ? "—" : `${Math.round(value * 1000) / 10}%`;
   const today = () => new Intl.DateTimeFormat("sv-SE", {timeZone:"Asia/Seoul"}).format(new Date());
@@ -98,6 +99,17 @@ window.AttendanceBoard = (() => {
       else if (!event.target.closest(".calendar-popup")) closePopups();
     });
     document.addEventListener("click", event => {
+      const portalTab = event.target.closest("[data-portal-tab]");
+      if (portalTab) {
+        activeTab = portalTab.dataset.portalTab;
+        document.querySelectorAll("[data-portal-tab]").forEach(button => {
+          const selected = button.dataset.portalTab === activeTab;
+          button.classList.toggle("is-active", selected);
+          button.setAttribute("aria-selected", String(selected));
+        });
+        document.querySelectorAll("[data-portal-page]").forEach(page => { page.hidden = page.dataset.portalPage !== activeTab; });
+        return;
+      }
       const expandButton = event.target.closest(".board-expand");
       if (expandButton) {
         if (expandButton.getAttribute("aria-expanded") === "true") closeExpandedCard();
@@ -208,7 +220,8 @@ window.AttendanceBoard = (() => {
     return members.sort((a,b) => a.name.localeCompare(b.name,"ko")).map(member => {
       const row = {member, ...stats(state, member.id, month)};
       const eventRows = memberEvents(state, member, month);
-      return `<article class="member-search-card">${rateRow(row)}<div class="member-event-list"><h3>행사별 출결</h3>${eventRows.length ? eventRows.map(event => `<div class="member-event-row"><time datetime="${esc(event.date)}">${esc(event.date.slice(5).replace("-","."))}</time><span>${esc(event.name)}</span><strong class="member-event-status ${eventStatusLabel(event.status) === "참여" ? "is-present" : eventStatusLabel(event.status) === "예정" ? "is-upcoming" : "is-absent"}">${eventStatusLabel(event.status)}</strong></div>`).join("") : `<p class="board-note">해당 월 행사별 출결 자료가 없습니다.</p>`}</div></article>`;
+      const history = (state.monthlyReports || []).filter(report => report.memberId === member.id).sort((a,b) => b.month.localeCompare(a.month));
+      return `<article class="member-search-card"><header class="member-result-head"><div><strong>${esc(member.name)}</strong><span>${esc(member.cohort ? `${member.cohort}기` : "회원")}</span></div><div><span>선택 월 <b>${pct(row.rate)}</b></span><span>전체 <b>${pct(row.allRate)}</b></span></div></header><div class="member-month-history"><h3>월별 출석률</h3>${history.map(report => { const units = reportUnits(state, report).units; return `<div><time datetime="${esc(report.month)}">${esc(report.month.replace("-","년 "))}월</time><span>${units} / ${Number(report.activities || 0)}회</span><strong>${report.activities ? pct(units / report.activities) : "—"}</strong></div>`; }).join("") || `<p class="board-note">월별 출석 자료가 없습니다.</p>`}</div><div class="member-event-list"><h3>${month.slice(5)}월 행사별 출결</h3>${eventRows.length ? eventRows.map(event => `<div class="member-event-row"><time datetime="${esc(event.date)}">${esc(event.date.slice(5).replace("-","."))}</time><span>${esc(event.name)}</span><strong class="member-event-status ${eventStatusLabel(event.status) === "참여" ? "is-present" : eventStatusLabel(event.status) === "예정" ? "is-upcoming" : "is-absent"}">${eventStatusLabel(event.status)}</strong></div>`).join("") : `<p class="board-note">해당 월 행사별 출결 자료가 없습니다.</p>`}</div></article>`;
     }).join("");
   }
   function topAttendanceGroups(rows, limit = 3) {
@@ -230,28 +243,45 @@ window.AttendanceBoard = (() => {
     if (!winners.length) return `<div class="winner-photo-stage"><div class="winner-photo-grid winner-photo-grid-pending" aria-hidden="true"><span></span><span></span></div><div class="winner-counting"><strong>집계중</strong><span>사진 등록 후 공개됩니다.</span></div></div>`;
     return `<div class="winner-photo-grid">${winners.map((winner,index) => `<figure><img src="${esc(winner.photo)}" alt="${esc(winner.name || `${index + 1}번째 활동왕`)}"><figcaption>${winner.rank ? `<span>${Number(winner.rank)}위</span>` : ""}<strong>${esc(winner.name || "")}</strong></figcaption></figure>`).join("")}</div>`;
   }
+  function eventsForMonth(state, month) {
+    const scheduled = state.monthlySchedule || [];
+    return [...scheduled, ...(state.events || []).filter(event => !scheduled.some(item => item.date === event.date && item.name === event.name))]
+      .filter(event => event.date?.slice(0,7) === month)
+      .sort((a,b) => a.date.localeCompare(b.date));
+  }
+  function scheduleListHtml(events, compact = false) {
+    const label = {official:"정기출사 / 공식행사",photo:"사진 번개",external:"외부행사",regular:"정기출사",break:"휴회"};
+    const visible = compact ? events.slice(0,4) : events;
+    return `<ol class="portal-schedule-list">${visible.map(event => `<li><time datetime="${esc(event.date)}"><strong>${Number(event.date.slice(8))}</strong><span>${["일","월","화","수","목","금","토"][new Date(event.date+"T12:00:00+09:00").getUTCDay()]}</span></time><div><strong>${esc(event.name)}</strong><span>${esc(label[event.type] || "행사")}${event.startTime ? ` · ${esc(event.startTime)}` : ""}</span></div><em>${event.date > today() ? "예정" : event.date === today() ? "오늘" : "완료"}</em></li>`).join("") || `<li class="portal-empty">등록된 일정이 없습니다.</li>`}</ol>`;
+  }
+  function scheduleHistoryHtml(state) {
+    return months(state).map(month => {
+      const events = eventsForMonth(state, month);
+      if (!events.length) return "";
+      return `<section class="schedule-month-group"><h3>${month.replace("-","년 ")}월 <span>${events.length}건</span></h3>${scheduleListHtml(events)}</section>`;
+    }).join("") || `<p class="portal-empty">등록된 월별 일정이 없습니다.</p>`;
+  }
+  function winnerMonth(state, month) {
+    const available = [...new Set([...Object.keys(bundledActivityWinners), ...(state.activityWinners || []).filter(item => item.photo).map(item => item.month)])].sort().reverse();
+    return available.find(item => item <= month) || available[0] || month;
+  }
   function render(state, month, query = "", admin = false) {
-    const events = [...(state.monthlySchedule || []), ...(state.events || []).filter(e => !(state.monthlySchedule || []).some(s => s.date.slice(0,7) === e.date.slice(0,7)))].filter(e => e.date.slice(0,7) === month).sort((a,b) => a.date.localeCompare(b.date));
-    const label = {official:"정기출사 / 공식행사",photo:"번개",external:"외부행사",regular:"정기출사"};
+    const events = eventsForMonth(state, month);
+    const awardMonth = winnerMonth(state, month);
+    const activityCount = Math.max(...(state.monthlyReports || []).filter(report => report.month === month).map(report => Number(report.activities || 0)), 0);
     const expandButton = `<button type="button" class="board-expand" aria-label="크게 보기" title="크게 보기" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="board-expand-mark" d="M14 3h7v7M21 3l-8 8M10 21H3v-7M3 21l8-8"/><path class="board-close-mark" d="M6 6l12 12M18 6L6 18"/></svg></button>`;
-    return `<div class="board-toolbar"><label class="board-month">기준월<select id="dashboard-month">${months(state).map(m => `<option value="${m}" ${m===month?"selected":""}>${m.replace("-","년 ")}월</option>`).join("")}</select></label></div>
-      <div class="attendance-board${month === "2026-09" ? " attendance-board-balanced" : ""}">
-        <section class="board-card board-rate" aria-labelledby="board-title-rate"><header><span class="board-number">01</span><h2 id="board-title-rate">출석률</h2><div class="board-card-actions"><span class="board-chip">월 기준 50%</span>${expandButton}</div></header>
-          <p class="board-note board-rate-intro">회원 이름을 검색하면 해당 월 출석률과 행사별 참여 여부를 확인할 수 있습니다.</p>
-          <label class="board-search">회원 검색<input id="board-member-search" type="search" placeholder="이름 입력" value="${esc(query)}" autocomplete="off"></label>
-          <div id="board-search-result" class="board-search-result">${searchMemberHtml(state, month, query)}</div>
-        </section>
-        <section class="board-card board-winners" aria-labelledby="board-title-winners"><header><span class="board-number">02</span><h2 id="board-title-winners">이달의 활동왕</h2><div class="board-card-actions"><span class="board-chip">${month.slice(5)}월</span>${expandButton}</div></header>
-          ${activityWinnerHtml(state, month)}
-        </section>
-        <section class="board-card board-rules" aria-labelledby="board-title-rules"><header><span class="board-number">03</span><h2 id="board-title-rules">출석규정</h2><div class="board-card-actions">${expandButton}</div></header>
-          <dl class="board-rule-summary"><div><dt>월별·전체 출석률</dt><dd>각 50% 이상</dd></div><div><dt>공식행사 / 사진 번개</dt><dd>1회 / 0.5회</dd></div><div><dt>2개월 / 3개월 미달</dt><dd>경고 누계 1회 / 2회</dd></div></dl>
-          <p class="board-note">출석경고는 활동기간 시작 시 초기화됩니다.<br>경고 2회가 부과되면 수료실패에 해당합니다.</p>
-        </section>
-        <section class="board-card board-schedule" aria-labelledby="board-title-schedule"><header><span class="board-number">04</span><h2 id="board-title-schedule">이번달 일정</h2><div class="board-card-actions"><span class="board-chip">${events.filter(e=>e.type!=="break").length}건${events.some(e=>e.type==="break")?" · 휴회 1일":""}</span>${expandButton}</div></header>
-          ${month === "2026-10" ? posterCalendar(events,month) : `<ol class="board-event-list${month === "2026-09" ? " board-event-list-two" : ""}">${events.map(e=>`<li><time datetime="${esc(e.date)}"><strong>${Number(e.date.slice(8))}</strong><span>${["일","월","화","수","목","금","토"][new Date(e.date+"T12:00:00+09:00").getUTCDay()]}</span></time><div><strong>${esc(e.name)}</strong><span>${esc(label[e.type]||"행사")}${e.startTime?` · ${esc(e.startTime)}`:""}</span></div><span class="board-event-state">${e.date>today()?"예정":e.date===today()?"오늘":"지난 일정"}</span></li>`).join("") || `<li class="board-empty">등록된 일정이 없습니다.</li>`}</ol><p class="board-note">${(state.monthlySchedule||[]).some(e=>e.date.startsWith(month))?"월별 출결표에 기재된 일정입니다.":"등록된 행사 일정을 표시합니다."}</p>`}
-        </section>
-      </div>${admin ? importHtml(state) : ""}`;
+    return `<div class="cam-portal">
+      <header class="portal-header"><div class="portal-brand"><img src="${assetBase}assets/cami-logo.jpg" alt="CAM-I 로고"><strong>CAM-I</strong></div><nav class="portal-tabs" aria-label="주요 메뉴" role="tablist"><button type="button" role="tab" data-portal-tab="home" class="${activeTab === "home" ? "is-active" : ""}" aria-selected="${activeTab === "home"}">홈</button><button type="button" role="tab" data-portal-tab="feed" class="${activeTab === "feed" ? "is-active" : ""}" aria-selected="${activeTab === "feed"}">피드</button></nav><label class="portal-month">기준월<select id="dashboard-month">${months(state).map(item => `<option value="${item}" ${item===month?"selected":""}>${item.replace("-","년 ")}월</option>`).join("")}</select></label></header>
+      <main class="portal-page" data-portal-page="home" ${activeTab === "home" ? "" : "hidden"}>
+        <section class="club-rules-strip" aria-labelledby="club-rules-title"><header><div><span class="status-dot" aria-hidden="true"></span><p>CAM-I ACTIVITY STANDARD</p><h1 id="club-rules-title">동아리 회칙</h1></div><span class="rule-period">활동기간 기준</span></header><dl><div><dt>월별·전체 출석률</dt><dd>각 50% 이상</dd></div><div><dt>공식행사 / 사진 번개</dt><dd>1회 / 0.5회</dd></div><div><dt>출석경고</dt><dd>2개월 1회 · 3개월 2회</dd></div></dl><p>출석경고는 활동기간 시작 시 초기화되며, 경고 2회 부과 시 수료실패에 해당합니다.</p></section>
+        <div class="portal-dashboard">
+          <section class="board-card portal-panel attendance-panel" aria-labelledby="attendance-panel-title"><header><div><span class="panel-eyebrow">ATTENDANCE</span><h2 id="attendance-panel-title">이번달 출석률</h2></div><div class="board-card-actions"><span class="board-chip">기준 50%</span>${expandButton}</div></header><div class="summary-only attendance-overview"><strong>${month.slice(5)}월</strong><div><span>회원별 출석률</span><b>검색으로 확인</b></div><div><span>반영 활동</span><b>${activityCount || "대기"}${activityCount ? "회" : ""}</b></div><p>자세히 보기에서 월별 출석률과 전체 출석률을 함께 확인할 수 있습니다.</p></div><div class="detail-only attendance-detail"><div class="detail-heading"><h3>월별·전체 출석률</h3><p>회원을 검색하면 선택한 달의 행사 참여 내역과 활동기간 전체 기록을 확인할 수 있습니다.</p></div><label class="board-search">회원 검색<input id="board-member-search" type="search" placeholder="이름 입력" value="${esc(query)}" autocomplete="off"></label><div id="board-search-result" class="board-search-result">${searchMemberHtml(state, month, query)}</div></div></section>
+          <section class="board-card portal-panel schedule-panel" aria-labelledby="schedule-panel-title"><header><div><span class="panel-eyebrow">SCHEDULE</span><h2 id="schedule-panel-title">이번달 일정</h2></div><div class="board-card-actions"><span class="board-chip">${events.length}건</span>${expandButton}</div></header><div class="summary-only">${scheduleListHtml(events,true)}</div><div class="detail-only schedule-detail"><div class="detail-heading"><h3>월별 일정</h3><p>등록된 일정을 월별로 모아봅니다.</p></div>${month === "2026-10" ? `<div class="featured-calendar">${posterCalendar(events,month)}</div>` : ""}${scheduleHistoryHtml(state)}</div></section>
+        </div>
+      </main>
+      <main class="portal-page feed-page" data-portal-page="feed" ${activeTab === "feed" ? "" : "hidden"}><section class="feed-awards"><header><span class="panel-eyebrow">CAM-I HONORS</span><h1>${awardMonth.slice(5)}월 활동왕</h1><p>함께한 순간을 빛낸 이번 달의 활동왕입니다.</p></header><div class="feed-winner-gallery">${activityWinnerHtml(state,awardMonth)}</div></section><div class="feed-open-space" aria-hidden="true"></div></main>
+      ${admin ? importHtml(state) : ""}
+    </div>`;
   }
   function memberRows(rows,query,pending) {
     const visible = rows.filter(r => r.member.name.includes(query.trim()));

@@ -10,21 +10,8 @@
 </head>
 <body>
   <main class="page-shell">
-    <header class="hero">
-      <div>
-        <p class="eyebrow">CAM-I PHOTO CLUB</p>
-        <h1>우리의 출석 기록</h1>
-        <p class="hero-copy">함께한 출사, 차곡차곡 쌓이는 순간.</p>
-      </div>
-      <div class="read-only-badge">출결 현황</div>
-    </header>
-
     <div id="public-board" aria-live="polite">출결 정보를 불러오는 중입니다.</div>
-
-    <footer class="footer">
-      <span>CAM-I · 사진으로 함께하는 우리</span>
-      <span id="updated-at"></span>
-    </footer>
+    <span id="updated-at" hidden></span>
   </main>
   <script src="./board.js" defer></script>
   <script src="./public.js" defer></script>

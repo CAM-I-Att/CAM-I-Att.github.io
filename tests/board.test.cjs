@@ -45,12 +45,12 @@ test('이미 집계된 번개 횟수는 공개 데이터에서 중복 가산하�
   };
   assert.equal(board.stats(state,'a','2026-09').units,3.5);
 });
-test('활동왕 사진 입력 전에는 집계중으로 표시한다', () => {
+test('피드는 가장 최근에 등록된 활동왕 사진을 표시한다', () => {
   const state = {rosterReady:true,members:[{id:'a',name:'가나다'},{id:'b',name:'라마바'}],events:[],monthlyReports:[report('2026-09',2),{...report('2026-09',2),memberId:'b'}]};
   const html = board.render(state,'2026-08');
-  assert.match(html,/winner-counting/);
-  assert.match(html,/집계중/);
-  assert.doesNotMatch(html,/<strong>가나다<\/strong>|<strong>라마바<\/strong>/);
+  assert.match(html,/09월 활동왕/);
+  assert.match(html,/kim-taegeon\.png/);
+  assert.match(html,/na-hyeyoung\.png/);
 });
 test('회원명과 일정명 HTML 이스케이프', () => {
   const html = board.render({members:[],events:[],monthlySchedule:[{date:'2026-09-05',type:'photo',name:'<script>alert(1)</script>'}]},'2026-09');
@@ -72,7 +72,7 @@ test('평균 출석률 문구는 렌더링하지 않는다', () => {
   const state = {rosterReady:true,members:[{id:'a',name:'가나다',active:true}],events:[],monthlyReports:[report('2026-09',1)]};
   const html = board.render(state,'2026-09');
   assert.doesNotMatch(html,/평균/);
-  assert.match(html,/이달의 활동왕/);
+  assert.match(html,/09월 활동왕/);
 });
 test('출석률 카드는 검색 전용으로 표시하고 인원수 목록을 노출하지 않는다', () => {
   const state = {rosterReady:true,members:[
@@ -86,13 +86,14 @@ test('출석률 카드는 검색 전용으로 표시하고 인원수 목록을 �
   assert.doesNotMatch(html,/나머지 회원 펼쳐보기/);
   assert.doesNotMatch(html,/출석규정 전문 보기/);
 });
-test('월 소개 문구를 숨기고 네 카드 모두 크게 보기 버튼을 제공한다', () => {
+test('홈은 출석률과 일정에만 자세히 보기 버튼을 제공한다', () => {
   const state = {rosterReady:true,members:[{id:'a',name:'가나다',active:true}],events:[],monthlyReports:[report('2026-09',1)]};
   const html = board.render(state,'2026-09');
   assert.doesNotMatch(html,/MONTHLY OVERVIEW|함께한 순간들/);
-  assert.equal((html.match(/class="board-expand"/g) || []).length,4);
-  assert.equal((html.match(/aria-label="크게 보기"/g) || []).length,4);
-  assert.equal((html.match(/<svg viewBox="0 0 24 24"/g) || []).length,4);
+  assert.equal((html.match(/class="board-expand"/g) || []).length,2);
+  assert.equal((html.match(/aria-label="크게 보기"/g) || []).length,2);
+  assert.equal((html.match(/<svg viewBox="0 0 24 24"/g) || []).length,2);
+  assert.match(html,/class="club-rules-strip"/);
 });
 test('검색 결과에 회원 출석률과 행사별 참여 여부를 표시한다', () => {
   const state = {
@@ -131,10 +132,54 @@ test('9월 활동왕 인증서 두 장을 기본 사진으로 표시한다', () 
   assert.ok(fs.existsSync('public/assets/activity-winners/2026-09/kim-taegeon.png'));
   assert.ok(fs.existsSync('public/assets/activity-winners/2026-09/na-hyeyoung.png'));
 });
-test('9월 일정은 한 줄에 두 개씩 표시한다', () => {
+test('이번달 일정과 월별 일정 상세를 함께 제공한다', () => {
   const html = board.render({members:[],events:[],monthlySchedule:[{date:'2026-09-05',type:'official',name:'OT'}]},'2026-09');
-  assert.match(html,/attendance-board-balanced/);
-  assert.match(html,/board-event-list-two/);
+  assert.match(html,/class="portal-schedule-list"/);
+  assert.match(html,/class="schedule-month-group"/);
+  assert.match(html,/월별 일정/);
+});
+
+test('월별 출결표와 같은 달의 추가 행사를 함께 표시한다', () => {
+  const html = board.render({
+    members:[],
+    monthlyReports:[],
+    monthlySchedule:[{date:'2026-09-05',type:'official',name:'OT'}],
+    events:[{date:'2026-09-11',type:'photo',name:'야간 사진 번개'}],
+  },'2026-09');
+  assert.match(html,/OT/);
+  assert.match(html,/야간 사진 번개/);
+});
+
+test('상단에는 CAM-I 로고와 홈·피드 탭만 표시한다', () => {
+  const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
+  assert.match(html,/assets\/cami-logo\.jpg/);
+  assert.match(html,/data-portal-tab="home"/);
+  assert.match(html,/data-portal-tab="feed"/);
+  assert.doesNotMatch(html,/관심/);
+});
+
+test('출석률 상세는 선택 월과 전체 및 월별 기록을 표시한다', () => {
+  const state = {
+    rosterReady:true,
+    members:[{id:'a',name:'가나다',active:true}],
+    events:[],
+    monthlyReports:[
+      {...report('2026-08',1),memberId:'a'},
+      {...report('2026-09',2),memberId:'a'},
+    ],
+  };
+  const html = board.searchMemberHtml(state,'2026-09','가나다');
+  assert.match(html,/선택 월 <b>100%<\/b>/);
+  assert.match(html,/전체 <b>75%<\/b>/);
+  assert.match(html,/월별 출석률/);
+  assert.match(html,/2026년 08월/);
+  assert.match(html,/2026년 09월/);
+});
+
+test('피드는 큰 활동왕 영역 뒤를 빈 공간으로 남긴다', () => {
+  const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
+  assert.match(html,/class="feed-awards"/);
+  assert.match(html,/class="feed-open-space"/);
 });
 test('출석규정 한자 배지를 숨기고 사진 번개로 표시한다', () => {
   const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
