@@ -201,6 +201,14 @@ test('피드는 큰 활동왕 영역 뒤를 빈 공간으로 남긴다', () => {
   assert.match(html,/class="feed-awards"/);
   assert.match(html,/class="feed-open-space"/);
 });
+
+test('홈 하단에 제작 크레딧을 작게 표시한다', () => {
+  const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
+  assert.match(html,/class="portal-credit"/);
+  assert.match(html,/제작 CAM-I 21기 운영진 이준우/);
+  assert.match(html,/Speical Thanks to 한시우 및 21기 운영진 전원/);
+  assert.match(boardCss,/\.portal-credit\s*\{[^}]*font-size:9px/);
+});
 test('출석규정 한자 배지를 숨기고 사진 번개로 표시한다', () => {
   const html = board.render({members:[],events:[],monthlyReports:[]},'2026-09');
   assert.doesNotMatch(html,/회칙 中 出缺|인정 번개|status-dot/);
