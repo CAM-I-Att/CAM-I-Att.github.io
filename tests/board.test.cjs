@@ -166,7 +166,7 @@ test('상단에는 CAM-I 로고와 홈·피드 탭만 표시한다', () => {
 });
 
 test('기준월 선택기는 출석률과 일정 카드 안에 각각 표시한다', () => {
-  const html = board.render({members:[],events:[],monthlyReports:[report('2026-09',1)]},'2026-09','',false,'2026-10');
+  const html = board.render({members:[],events:[],monthlyReports:[report('2026-09',1),report('2026-10',1)]},'2026-09','',false,'2026-10');
   assert.equal((html.match(/class="dashboard-month"/g) || []).length,2);
   assert.match(html,/aria-label="출석률 기준월"/);
   assert.match(html,/aria-label="일정 기준월"/);

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-28T15:31:49",
+  "generatedAt": "2026-11-03T11:44:28",
   "rosterReady": true,
   "monthlyReports": [
     {
@@ -337,7 +337,7 @@
       "memberId": "M-1314C366",
       "month": "2026-09",
       "term": "21기",
-      "activities": 3.0,
+      "activities": 2.0,
       "units": 1.0,
       "finalized": true,
       "regularUnits": 1.0,
@@ -812,34 +812,981 @@
           "units": 0.0
         }
       ]
+    },
+    {
+      "memberId": "O-B25ADA4D",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 3.0,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-C3A2BBA7",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-C95B964A",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-952EB328",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-D869081E",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-96C3A041",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 0.0,
+      "finalized": true,
+      "regularUnits": 0.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-AF272FEF",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-7BFF9CA3",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-2BD7ADA2",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-23828462",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 3.0,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-805B8545",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 3.0,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-1314C366",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-1F3823D7",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-57E66CB8",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-7CE13E3F",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-79B59ACE",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-3F5A6D0D",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 4.0,
+      "finalized": true,
+      "regularUnits": 4.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-D3C3870D",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-301E47E7",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 0.0,
+      "finalized": true,
+      "regularUnits": 0.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-6EF6CB23",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-6ED72684",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 3.0,
+      "finalized": true,
+      "regularUnits": 3.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-FDAD6FC5",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-0F4FB4E7",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-D88537A3",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 1.0,
+      "finalized": true,
+      "regularUnits": 1.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "미참여",
+          "units": 0.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-B4B2B243",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "M-2280E5F7",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
+    },
+    {
+      "memberId": "O-F64EDBB4",
+      "month": "2026-10",
+      "term": "21기",
+      "activities": 4.0,
+      "units": 2.0,
+      "finalized": true,
+      "regularUnits": 2.0,
+      "lightningCount": 0.0,
+      "attendance": [
+        {
+          "date": "2026-10-03",
+          "name": "종로 3가",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-10",
+          "name": "양재천",
+          "status": "미참여",
+          "units": 0.0
+        },
+        {
+          "date": "2026-10-24",
+          "name": "해방촌",
+          "status": "참여",
+          "units": 1.0
+        },
+        {
+          "date": "2026-10-30",
+          "name": "하늘공원",
+          "status": "참여",
+          "units": 1.0
+        }
+      ]
     }
   ],
   "monthlySchedule": [
-    {
-      "date": "2026-10-03",
-      "name": "정기출사",
-      "type": "regular"
-    },
-    {
-      "date": "2026-10-10",
-      "name": "정기출사",
-      "type": "regular"
-    },
-    {
-      "date": "2026-10-17",
-      "name": "중간고사 휴회",
-      "type": "break"
-    },
-    {
-      "date": "2026-10-24",
-      "name": "정기출사",
-      "type": "regular"
-    },
-    {
-      "date": "2026-10-31",
-      "name": "정기출사",
-      "type": "regular"
-    },
     {
       "date": "2026-09-05",
       "name": "OT",
@@ -869,8 +1816,34 @@
       "date": "2026-09-30",
       "name": "이촌 한강공원",
       "type": "photo"
+    },
+    {
+      "date": "2026-10-17",
+      "name": "중간고사 휴회",
+      "type": "break"
+    },
+    {
+      "date": "2026-10-03",
+      "name": "종로 3가",
+      "type": "official"
+    },
+    {
+      "date": "2026-10-10",
+      "name": "양재천",
+      "type": "official"
+    },
+    {
+      "date": "2026-10-24",
+      "name": "해방촌",
+      "type": "official"
+    },
+    {
+      "date": "2026-10-30",
+      "name": "하늘공원",
+      "type": "official"
     }
   ],
+  "activityWinners": [],
   "members": [
     {
       "id": "O-B25ADA4D",
